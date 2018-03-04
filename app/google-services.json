@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "41847385577",
+    "firebase_url": "https://teaching-a6f06.firebaseio.com",
+    "project_id": "teaching-a6f06",
+    "storage_bucket": "teaching-a6f06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41847385577:android:acf77dc6cb8beefc",
+        "android_client_info": {
+          "package_name": "com.example.kbasa.teaching"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41847385577-7k9giimsproqmbqf3i5ba2qdml852rll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1v3UmbWp3KGDzq7L-OkOr-KN4I23StvM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
