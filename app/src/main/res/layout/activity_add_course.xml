@@ -17,15 +17,59 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <VideoView
-                android:id="@+id/introVideoView"
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="50dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/videoPickerButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Select Video" />
+
+                    <Button
+                        android:id="@+id/displayImagePickerButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Select pic" />
+
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+
+            <EditText
+                android:id="@+id/courseNameTextView"
                 android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="course name"/>
+
+            <EditText
+                android:id="@+id/detailsTextView"
+                android:gravity="top"
+                android:layout_width="match_parent"
+                android:hint="course description"
                 android:layout_height="200dp" />
 
-            <MultiAutoCompleteTextView
-                android:id="@+id/detailsMultiTextView"
+            <EditText
+                android:id="@+id/tagTextView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="56dp"
+                android:hint="tags" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:gravity="top"
+                android:layout_height="80dp"
+                android:hint="about you"
+                android:id="@+id/aboutProfessorTextView"/>
 
             <Button
                 android:id="@+id/uploadVideo"

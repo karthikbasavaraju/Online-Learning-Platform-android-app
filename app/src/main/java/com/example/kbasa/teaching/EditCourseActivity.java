@@ -29,16 +29,16 @@ public class EditCourseActivity extends AppCompatActivity {
         if(b!=null){
             courseId = b.getString("courseId");
         }
-        Log.i("louda courseId",courseId);
+        Log.i("test courseId",courseId);
 
         DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("louda - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
+                Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
                 String details="";
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    Log.i("louda - "+dataSnapshot1.getKey(),dataSnapshot1.getValue(Object.class).toString());
+                    Log.i("test - "+dataSnapshot1.getKey(),dataSnapshot1.getValue(Object.class).toString());
                     details = details + dataSnapshot1.getKey()+" : "+dataSnapshot1.getValue(Object.class).toString()+"\n";
                 }
                 Course course = dataSnapshot.getValue(Course.class);

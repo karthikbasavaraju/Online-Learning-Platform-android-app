@@ -53,7 +53,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(passwordEditText.getText().toString().equals(repasswordEditText.getText().toString())) {
-                    auth.createUserWithEmailAndPassword("s_"+emailEditText.getText().toString(), passwordEditText.getText().toString())
+                    auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="eskafiF@scu.edu"
+        android:text="s_karthik@email.com"
         android:hint="email" />
 
     <EditText
@@ -23,14 +23,20 @@
         android:layout_marginTop="10dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:text="mobileapp"
+        android:text="k26616495"
         android:hint="password"/>
-
+    <!--mobileapp-->
     <Button
-        android:id="@+id/loginButton"
+        android:id="@+id/studentLoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login" />
+        android:text="Student Login" />
+
+    <Button
+        android:id="@+id/teacherLoginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teacher Login" />
 
     <Button
         android:id="@+id/newRegister"
