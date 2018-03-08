@@ -1,32 +1,42 @@
 package com.example.kbasa.teaching;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class StudentSearchActivity extends AppCompatActivity {
 
-    LinkedList ll = new LinkedList();
+    ListView list;
+    Vector<Map<String, String>> vector;
+    Vector<String> tagVector;
+    List web ;
+    SearchView mSearchView;
+
     public StudentSearchActivity(){
-        ll.add("Yosemite National Park");
-        ll.add("Sequoia National Park");
-        ll.add("Lassen Volcanic National Park");
-        ll.add("Death Valley National Park");
-        ll.add("Joshua Tree National Park");
-        ll.add("Kings Canyon National Park");
-        ll.add("Pinnacles National Park");
-        ll.add("Channel Islands National Park");
-        ll.add("Border Field State Park");
-        ll.add("Point Reyes National Park");
-        ll.add("Del Norte Coast Redwoods State Park");
+
 
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,44 +44,97 @@ public class StudentSearchActivity extends AppCompatActivity {
         this.getSupportActionBar().hide();
         setContentView(R.layout.activity_student_search);
 
-        final ListView wikiLinks = findViewById(R.id.wikiLinks);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.activity_textview, R.id.button, ll);
 
-        SearchView sv = findViewById(R.id.searchButton);
+        DatabaseReference course = FirebaseDatabase.getInstance().getReference("Course");
 
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        course.addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(StudentSearchActivity.this, query, Toast.LENGTH_SHORT).show();
-                return true;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                vector = new Vector<>();
+                tagVector = new Vector<>();
+                Log.i("please", String.valueOf(dataSnapshot.getChildrenCount()));
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    String temp = dataSnapshot1.getKey();
+                    Map<String, String> v = new HashMap<>();
+                    v.put("courseId", temp);
+                    String professorName="";
+                    String courseName = "";
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                        if (dataSnapshot2.getKey().equals("courseName")) {
+                            v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
+                            courseName = dataSnapshot2.getValue(String.class);
+                        }
+                        else if (dataSnapshot2.getKey().equals("profileUri")) {
+                            v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
+                        }
+                        else if (dataSnapshot2.getKey().equals("name")) {
+                            v.put(dataSnapshot2.getKey(), dataSnapshot2.getValue(String.class));
+                            professorName =dataSnapshot2.getValue(String.class);
+                        }
+                        else if (dataSnapshot2.getKey().equals("tags")) {
+                            ArrayList tempTag = (ArrayList)dataSnapshot2.getValue();
+                            //List<String> tempTag = (List)tempMapTag.get("tags");
+                            String tempString="";
+                            for(Object tags : tempTag){
+                                tempString += tags.toString() + " ";
+                            }
+                            tempString = courseName+" "+professorName +" "+ tempString;
+                            tagVector.add(tempString);
+                        }
+                    }
+                    vector.add(v);
+                }
+                web = new LinkedList();
+                for(int i=0;i<tagVector.size();i++){
+                    web.add(tagVector.elementAt(i));
+
+                }
+
+
+
+
+                String filter =null;
+                final SearchPageDisplay adapter = new
+                        SearchPageDisplay(StudentSearchActivity.this, web, vector, filter);
+                list=(ListView)findViewById(R.id.wikiLinks);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+
+                        Intent intent = new Intent(StudentSearchActivity.this,EditCourseActivity.class);
+                        intent.putExtra("courseId", (vector.get(position)).get("courseId"));
+                        startActivity(intent);
+
+                        Toast.makeText(StudentSearchActivity.this, "You Clicked at " +web.get(position), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                SearchView sv = findViewById(R.id.searchButton);
+
+
+                sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        adapter.getFilter().filter(query);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        return false;
+                    }
+                });
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public void onCancelled(DatabaseError databaseError) {
 
-                adapter.getFilter().filter(newText);
-                return false;
             }
         });
-
-
-        /*wikiLinks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(StudentSearchActivity.this, Activity2.class);
-
-                ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-                if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-                    intent.putExtra("web_page",String.valueOf(wikiLinks.getItemIdAtPosition(i)));
-                    startActivity(intent);
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "No Internet Connection!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });*/
-        wikiLinks.setAdapter(adapter);
     }
+
 }

@@ -1,22 +1,21 @@
 package com.example.kbasa.teaching;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -24,20 +23,20 @@ import java.util.Vector;
  * Created by kbasa on 3/6/2018.
  */
 
-public class CustomAdapter extends BaseAdapter {
+public class CustomAdapter extends BaseAdapter{
     Context context;
-    Vector<Map<String,String>> animals;
+    Vector<Map<String,String>> course;
     LayoutInflater inflter;
 
-    public CustomAdapter(Context applicationContext, Vector<Map<String,String>> animals) {
+    public CustomAdapter(Context applicationContext, Vector<Map<String,String>> course) {
         this.context = applicationContext;
-        this.animals = animals;
+        this.course = course;
         inflter = (LayoutInflater.from(applicationContext));
     }
 
     @Override
     public int getCount() {
-        return animals.size();
+        return course.size();
     }
 
     @Override
@@ -54,14 +53,15 @@ public class CustomAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.activity_gridview, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon);
-//        Uri profileUri = Uri.parse((animals.get(i)).get("profileUri"));
 
-        Uri profileUri = Uri.parse((animals.get(i)).get("profileUri"));
+        Uri profileUri = Uri.parse((course.get(i)).get("profileUri"));
         imageView.setTag(profileUri);
 
         new DownloadImageTask().execute(imageView);
         TextView courseName = view.findViewById(R.id.courseNameTextView);
-        courseName.setText((animals.get(i)).get("courseName"));
+        courseName.setText((course.get(i)).get("courseName"));
         return view;
     }
+
+
 }
