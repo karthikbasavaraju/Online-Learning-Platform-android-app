@@ -20,6 +20,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".Notification">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".RecevieMessage">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".TeacherHomeActivity" />
         <activity android:name=".AddCourseActivity" />
@@ -27,5 +42,6 @@
         <activity android:name=".StudentHomeActivity" />
         <activity android:name=".StudentSearchActivity"></activity>
     </application>
+
 
 </manifest>

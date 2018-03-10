@@ -20,6 +20,7 @@ public class Course {
     String courseUri;
     String profileUri;
     List<String> tags;
+    String professorId;
     List<HashMap<Integer,String>> student;   //To store student id and their status(enrolled or complete)
 
     public Course(){
@@ -28,7 +29,7 @@ public class Course {
     }
 
     public Course(String taughtBy, String aboutProfessor, String courseName, String courseDetails, List<String> tags,
-                  List<HashMap<Integer, String>> student, String courseUri, String profileUri) {
+                  List<HashMap<Integer, String>> student, String courseUri, String profileUri, String professorId) {
         this.taughtBy = taughtBy;
         this.aboutProfessor = aboutProfessor;
         this.courseName = courseName;
@@ -36,11 +37,20 @@ public class Course {
         this.tags = tags;
         this.student = student;
         this.courseUri = courseUri;
+        this.professorId = professorId;
         this.profileUri = profileUri;
     }
 
     public String getCourseUri() {
         return courseUri;
+    }
+
+    public String getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(String professorId) {
+        this.professorId = professorId;
     }
 
     public void setCourseUri(String uri) {

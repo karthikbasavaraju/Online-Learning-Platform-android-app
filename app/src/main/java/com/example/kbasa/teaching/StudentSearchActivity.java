@@ -30,7 +30,7 @@ public class StudentSearchActivity extends AppCompatActivity {
     ListView list;
     Vector<Map<String, String>> vector;
     Vector<String> tagVector;
-    List web ;
+    List<String> web ;
     SearchView mSearchView;
 
     public StudentSearchActivity(){
@@ -94,9 +94,8 @@ public class StudentSearchActivity extends AppCompatActivity {
 
 
 
-                String filter =null;
                 final SearchPageDisplay adapter = new
-                        SearchPageDisplay(StudentSearchActivity.this, web, vector, filter);
+                        SearchPageDisplay(StudentSearchActivity.this, web, vector);
                 list=(ListView)findViewById(R.id.wikiLinks);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,7 +118,35 @@ public class StudentSearchActivity extends AppCompatActivity {
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        adapter.getFilter().filter(query);
+                        final Vector<String> tempTag = new Vector();
+                        final Vector<Map<String,String>> tempDetails = new Vector<>();
+                        for(int i = 0 ; i < web.size();i++){
+                            if((web.get(i).toLowerCase()).contains(query.toLowerCase()))
+                            {
+                                tempTag.add(web.get(i));
+                                tempDetails.add(vector.get(i));
+                            }
+                        }
+
+
+                        SearchPageDisplay adapter1 = new
+                                SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
+                        list=(ListView)findViewById(R.id.wikiLinks);
+                        list.setAdapter(adapter1);
+                        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view,
+                                                    int position, long id) {
+
+                                Intent intent = new Intent(StudentSearchActivity.this,EditCourseActivity.class);
+                                intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
+                                startActivity(intent);
+
+                                Toast.makeText(StudentSearchActivity.this, "You Clicked at " +web.get(position), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         return true;
                     }
 

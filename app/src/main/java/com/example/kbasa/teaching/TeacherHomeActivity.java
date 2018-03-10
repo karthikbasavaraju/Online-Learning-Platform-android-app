@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,9 +40,14 @@ public class TeacherHomeActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance();
         Log.i("test",user.getUid());
 
+        String f = FirebaseInstanceId.getInstance().getToken();
+        Log.i("Token",f);
+        new Notification().onTokenRefresh();
 
 
 
+        db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid());
+        db.updateChildren(new HashMap<String, Object>(){{put("tokenId",FirebaseInstanceId.getInstance().getToken());}});
 
         db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
         db.addValueEventListener(new ValueEventListener() {
@@ -62,6 +68,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
                         final Vector<Map<String,String>> vector = new Vector<>();
                         Log.i("please",String.valueOf(dataSnapshot.getChildrenCount()));
                         for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+
                             String temp = dataSnapshot1.getKey();
                             if(list.contains(temp)){
                                 Map<String,String> v = new HashMap<>();

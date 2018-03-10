@@ -22,7 +22,7 @@ public class SearchPageDisplay extends ArrayAdapter<String> implements Filterabl
     private List<String> web;
     private Vector<Map<String,String>> vector;
     public SearchPageDisplay(Activity context,
-                      List<String> web1, Vector<Map<String,String>> vector1, String filter) {
+                      List<String> web1, Vector<Map<String,String>> vector1) {
         super(context, R.layout.activity_textview, web1);
 
             this.web = web1;

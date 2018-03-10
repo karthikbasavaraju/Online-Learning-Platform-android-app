@@ -4,11 +4,14 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.example.kbasa.teaching.DataTypes.Course;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,15 +20,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
-public class EditCourseActivity extends AppCompatActivity {
+import java.util.HashMap;
 
+public class EditCourseActivity extends AppCompatActivity {
+    String courseId="";
+    Course course = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_course);
 
         Bundle b = getIntent().getExtras();
-        String courseId="";
+
         if(b!=null){
             courseId = b.getString("courseId");
         }
@@ -41,7 +47,7 @@ public class EditCourseActivity extends AppCompatActivity {
                     Log.i("test - "+dataSnapshot1.getKey(),dataSnapshot1.getValue(Object.class).toString());
                     details = details + dataSnapshot1.getKey()+" : "+dataSnapshot1.getValue(Object.class).toString()+"\n";
                 }
-                Course course = dataSnapshot.getValue(Course.class);
+                course = dataSnapshot.getValue(Course.class);
                 Uri uri = Uri.parse(course.getCourseUri());
                 VideoView videoViewLandscape = findViewById(R.id.introVideoView);
                 videoViewLandscape.setVideoURI(uri);
@@ -50,10 +56,38 @@ public class EditCourseActivity extends AppCompatActivity {
                 TextView detailsMultiView = findViewById(R.id.detailsMultiTextView);
                 detailsMultiView.setText(details);
 
+
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Button enrollButton = findViewById(R.id.enrollButton);
+        enrollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(course.getProfessorId()).child("tokenId");
+
+                db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String tokenId = dataSnapshot.getValue(String.class);
+                        new RequestServerNotification(tokenId).execute();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
 
             }
         });

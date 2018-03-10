@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "41847385577-03eosqnm3d6sg3miuv8m3qjonli7b15p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kbasa.teaching",
+            "certificate_hash": "13f6f990533a4cd0b150a274a7294669c9cbc4a9"
+          }
+        },
+        {
           "client_id": "41847385577-7k9giimsproqmbqf3i5ba2qdml852rll.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41847385577-7k9giimsproqmbqf3i5ba2qdml852rll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
