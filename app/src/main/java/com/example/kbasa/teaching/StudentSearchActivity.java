@@ -139,7 +139,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
 
-                                Intent intent = new Intent(StudentSearchActivity.this,EditCourseActivity.class);
+                                Intent intent = new Intent(StudentSearchActivity.this,EnrollCourseActivity.class);
                                 intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                                 startActivity(intent);
 

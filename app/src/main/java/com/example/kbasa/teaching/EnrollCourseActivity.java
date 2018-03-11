@@ -1,29 +1,22 @@
 package com.example.kbasa.teaching;
 
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.kbasa.teaching.DataTypes.Course;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-
-public class EditCourseActivity extends AppCompatActivity {
+public class EnrollCourseActivity extends AppCompatActivity {
     String courseId="";
     Course course = null;
     @Override
@@ -67,17 +60,18 @@ public class EditCourseActivity extends AppCompatActivity {
             }
         });
 
-        Button enrollButton = findViewById(R.id.editButton);
+        Button enrollButton = findViewById(R.id.enrollButton);
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(courseId);
+                DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(course.getProfessorId()).child("tokenId");
 
                 db.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(EditCourseActivity.this,"Edit course",Toast.LENGTH_SHORT).show();
+                        String tokenId = dataSnapshot.getValue(String.class);
+                        new RequestServerNotification(tokenId).execute();
                     }
 
                     @Override
