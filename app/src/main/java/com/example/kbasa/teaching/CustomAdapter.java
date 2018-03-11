@@ -15,6 +15,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Vector;
@@ -54,10 +56,12 @@ public class CustomAdapter extends BaseAdapter{
         view = inflter.inflate(R.layout.activity_gridview, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.icon);
 
-        Uri profileUri = Uri.parse((course.get(i)).get("profileUri"));
-        imageView.setTag(profileUri);
+        //    new DownloadImageTask().execute(imageView);
+//        Uri profileUri = Uri.parse((course.get(i)).get("profileUri"));
+  //      imageView.setTag(profileUri);
 
-        new DownloadImageTask().execute(imageView);
+        Picasso.with(context).load((course.get(i)).get("profileUri")).into(imageView);
+
         TextView courseName = view.findViewById(R.id.courseNameTextView);
         courseName.setText((course.get(i)).get("courseName"));
         return view;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kbasa.teaching.LoginActivity">
+
+
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="eskafif@scu.edu"
+        android:layout_marginTop="93dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Email ID" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/emailEditText"
+        android:layout_below="@+id/emailEditText"
+        android:text="mobileapp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword" />
+
+    <Button
+
+        android:id="@+id/btn_student_login"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:onClick="toStudentHome"
+        android:text="Student Login"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btn_teacher_login"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:onClick="toTeacherHome"
+        android:text="Teacher Login"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:layout_alignEnd="@+id/btn_student_login"
+        android:layout_below="@+id/btn_student_login" />
+
+    <Button
+        android:id="@+id/btn_login_google"
+        android:layout_width="329dp"
+        android:layout_height="wrap_content"
+        android:text="Login with Google"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:layout_alignStart="@+id/btn_teacher_login"
+        android:layout_below="@+id/btn_teacher_login" />
+
+    <Button
+        android:id="@+id/btn_login_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_login_google"
+        android:layout_centerHorizontal="true"
+        android:onClick="toRegister"
+        android:text="New here? Create a count"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
+</RelativeLayout>
