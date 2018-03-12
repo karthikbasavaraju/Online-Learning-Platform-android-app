@@ -2,16 +2,16 @@ package com.example.kbasa.teaching;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 
+import com.example.kbasa.teaching.students.EnrollActivity;
+import com.example.kbasa.teaching.teachers.ViewCourseActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +45,8 @@ public class StudentSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_search);
 
 
+        Bundle b = this.getIntent().getExtras();
+        final String tagQuery = b.getString("tag");
 
         DatabaseReference course = FirebaseDatabase.getInstance().getReference("Course");
 
@@ -74,7 +76,6 @@ public class StudentSearchActivity extends AppCompatActivity {
                         }
                         else if (dataSnapshot2.getKey().equals("tags")) {
                             ArrayList tempTag = (ArrayList)dataSnapshot2.getValue();
-                            //List<String> tempTag = (List)tempMapTag.get("tags");
                             String tempString="";
                             for(Object tags : tempTag){
                                 tempString += tags.toString() + " ";
@@ -92,10 +93,19 @@ public class StudentSearchActivity extends AppCompatActivity {
                 }
 
 
+                final Vector<String> tempTag = new Vector();
+                final Vector<Map<String,String>> tempDetails = new Vector<>();
+                for(int i = 0 ; i < web.size();i++){
+                    if((web.get(i).toLowerCase()).contains(tagQuery.toLowerCase()))
+                    {
+                        tempTag.add(web.get(i));
+                        tempDetails.add(vector.get(i));
+                    }
+                }
 
 
                 final SearchPageDisplay adapter = new
-                        SearchPageDisplay(StudentSearchActivity.this, web, vector);
+                        SearchPageDisplay(StudentSearchActivity.this, tempTag, tempDetails);
                 list=(ListView)findViewById(R.id.wikiLinks);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,7 +114,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
 
-                        Intent intent = new Intent(StudentSearchActivity.this,EditCourseActivity.class);
+                        Intent intent = new Intent(StudentSearchActivity.this,EnrollActivity.class);
                         intent.putExtra("courseId", (vector.get(position)).get("courseId"));
                         startActivity(intent);
 
@@ -139,7 +149,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
 
-                                Intent intent = new Intent(StudentSearchActivity.this,EnrollCourseActivity.class);
+                                Intent intent = new Intent(StudentSearchActivity.this,ViewCourseActivity.class);
                                 intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                                 startActivity(intent);
 

@@ -75,6 +75,25 @@ public class TeacherHomeActivity extends AppCompatActivity {
         // Bottom Nav-Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         if(role.equals("student")) {
+
+            materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Intent intent = new Intent(TeacherHomeActivity.this,StudentSearchActivity.class);
+                    intent.putExtra("tag", query);
+                    startActivity(intent);
+
+
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
+
+
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {

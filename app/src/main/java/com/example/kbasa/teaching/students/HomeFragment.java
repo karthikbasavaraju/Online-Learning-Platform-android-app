@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.example.kbasa.teaching.R;
 
 import java.util.ArrayList;
@@ -32,10 +31,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       return View.inflate(getContext(),R.layout.activity_textview,container);
-
         // Inflate the layout for this fragment
-       /* View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         dataset = new ArrayList<>();
         for(int i=0; i<30; i++) {
@@ -64,7 +61,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        return view;*/
+        return view;
     }
 
 }

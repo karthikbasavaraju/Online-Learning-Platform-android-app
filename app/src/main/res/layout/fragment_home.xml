@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.kbasa.teaching.TeacherHomeActivity">
+
+    <TextView
+        android:id="@+id/tv_Recommended"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recommended"
+        android:textSize="18dp"
+        android:layout_marginLeft="5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_recommended"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_Ongoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ongoing"
+        android:textSize="18dp"
+        android:layout_marginLeft="5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_ongoing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="18dp"
+        android:layout_marginLeft="5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

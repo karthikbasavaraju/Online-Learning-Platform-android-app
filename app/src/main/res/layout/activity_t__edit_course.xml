@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.kbasa.teaching.teachers.ViewCourseActivity">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.example.derek.ui.teachers.T_AddCourseActivity">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Reupload Video"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            android:background="@color/colorPrimary"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,6 +68,12 @@
             android:textColor="@color/colorPrimary"/>
 
 
+
+
+
+
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -79,9 +97,8 @@
                 android:id="@+id/hour1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLength="2"
-                android:inputType="number"
-                android:text="00"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"/>
@@ -97,9 +114,8 @@
                 android:id="@+id/min1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="2"
-                android:text="00"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
@@ -127,9 +143,8 @@
                 android:id="@+id/hour2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="00"
-                android:maxLength="2"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"/>
@@ -145,9 +160,8 @@
                 android:id="@+id/min2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="00"
-                android:maxLength="2"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
@@ -175,9 +189,8 @@
                 android:id="@+id/hour3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="2"
-                android:text="00"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"/>
@@ -193,9 +206,8 @@
                 android:id="@+id/min3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="2"
-                android:text="00"
+                android:inputType="time"
+                android:hint="00"
                 android:textSize="20sp"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
@@ -223,91 +235,18 @@
             android:hint="Please separate tags with ','"
             android:gravity="left|top"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Introduciton Video"
-            android:textSize="22sp"
-            android:textColor="@color/colorPrimary"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="28dp"
-            android:layout_marginVertical="10dp">
-
-            <Button
-                android:id="@+id/btn_upload_video"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/colorPrimaryDark"
-                android:text="+"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp" />
-
-            <TextView
-                android:id="@+id/tv_intro_video_name"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/btn_upload_video"
-                android:paddingTop="10dp"
-                android:paddingLeft="15dp"
-                android:text="No video selected"
-                android:textSize="18sp"/>
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Course Picture"
-            android:textSize="22sp"
-            android:textColor="@color/colorPrimary"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="28dp"
-            android:layout_marginVertical="10dp">
-
-            <Button
-                android:id="@+id/btn_upload_picture"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/colorPrimaryDark"
-                android:text="+"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp" />
-
-            <TextView
-                android:id="@+id/tv_intro_picture_name"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/btn_upload_picture"
-                android:paddingTop="10dp"
-                android:paddingLeft="15dp"
-                android:text="No picture selected"
-                android:textSize="18sp"/>
-        </RelativeLayout>
-
 
         <Button
+            android:id="@+id/btn_save"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/upload"
-            android:text="ADD COURSE"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            android:background="@color/colorAccent"
-            android:textColor="#FFFFFF"/>
+            android:text="Save Changes"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/colorPrimary"/>
+
 
     </LinearLayout>
+
 </ScrollView>

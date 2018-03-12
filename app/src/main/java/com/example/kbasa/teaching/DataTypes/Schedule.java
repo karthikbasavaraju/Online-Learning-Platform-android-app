@@ -12,19 +12,13 @@ import java.util.TimeZone;
 public class Schedule {
 
     String courseId;
-    String OtherPersonid;
-    TimeZone time;
-    Date date;
+    String professorId;
+    MyDate myDate;
 
-    public Schedule(){
-        Log.i("DataConstructors","In Schedules");
-    }
-
-    public Schedule(String courseId, String otherPersonid, TimeZone time, Date date) {
+    public Schedule(String courseId, String professorId, MyDate myDate) {
         this.courseId = courseId;
-        this.OtherPersonid = otherPersonid;
-        this.time = time;
-        this.date = date;
+        this.professorId = professorId;
+        this.myDate = myDate;
     }
 
     public String getCourseId() {
@@ -35,27 +29,19 @@ public class Schedule {
         this.courseId = courseId;
     }
 
-    public String getOtherPersonid() {
-        return OtherPersonid;
+    public String getProfessorId() {
+        return professorId;
     }
 
-    public void setOtherPersonid(String otherPersonid) {
-        OtherPersonid = otherPersonid;
+    public void setProfessorId(String professorId) {
+        this.professorId = professorId;
     }
 
-    public TimeZone getTime() {
-        return time;
+    public MyDate getMyDate() {
+        return myDate;
     }
 
-    public void setTime(TimeZone time) {
-        this.time = time;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setMyDate(MyDate myDate) {
+        this.myDate = myDate;
     }
 }

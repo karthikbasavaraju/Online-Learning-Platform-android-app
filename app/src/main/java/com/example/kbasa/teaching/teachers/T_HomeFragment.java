@@ -4,23 +4,18 @@ package com.example.kbasa.teaching.teachers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ListView;
 
 
 import com.example.kbasa.teaching.CustomAdapter;
-import com.example.kbasa.teaching.EditCourseActivity;
 import com.example.kbasa.teaching.Notification;
 import com.example.kbasa.teaching.R;
-import com.example.kbasa.teaching.TeacherHomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -115,38 +110,12 @@ public class T_HomeFragment extends Fragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 // set an Intent to Another Activity
-                                Intent intent = new Intent(getContext(), EditCourseActivity.class);
+                                Intent intent = new Intent(getContext(), ViewCourseActivity.class);
                                 Map<String,String> temp = vector.get(position);
                                 intent.putExtra("courseId",temp.get("courseId") );
                                 startActivity(intent); // start Intent
                             }
                         });
-
-
-                        //grid
-//                        res_list = new ArrayList<>();
-//                        res_list.add("English");
-//                        res_list.add("Spanish");
-//                        res_list.add("Japanese");
-//
-//                        recyclerView = (RecyclerView) view.findViewById(R.id.list_t_courses);
-//                        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
-//                        recyclerView.setLayoutManager(layoutManager);
-//                        adapter = new CardListViewAdapter(res_list,getContext(),vector);
-//                        recyclerView.setAdapter(adapter);
-//
-//                        Button btn_add_course = (Button) view.findViewById(R.id.btn_add_course);
-//                        btn_add_course.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                // Intent intent = new Intent(getContext(), T_AddCourseActivity.class);
-//                                //startActivity(intent);
-//                            }
-//                        });
-
-
-
-
                     }
 
                     @Override

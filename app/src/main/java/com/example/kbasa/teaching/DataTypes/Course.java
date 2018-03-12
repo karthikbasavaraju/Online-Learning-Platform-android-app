@@ -12,13 +12,14 @@ import java.util.List;
 
 public class Course {
 
-    String taughtBy;
+    String name;
     String aboutProfessor;
     String courseName;
     String courseDetails;
     boolean available;
     String courseUri;
     String profileUri;
+    List<MyDate> myDate;
     List<String> tags;
     String professorId;
     List<HashMap<Integer,String>> student;   //To store student id and their status(enrolled or complete)
@@ -28,17 +29,28 @@ public class Course {
         Log.i("DataConstructors","In Course");
     }
 
-    public Course(String taughtBy, String aboutProfessor, String courseName, String courseDetails, List<String> tags,
-                  List<HashMap<Integer, String>> student, String courseUri, String profileUri, String professorId) {
-        this.taughtBy = taughtBy;
+    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available,
+                  String courseUri, String profileUri, List<MyDate> myDate, List<String> tags, String professorId,
+                  List<HashMap<Integer, String>> student) {
+        this.name = name;
         this.aboutProfessor = aboutProfessor;
         this.courseName = courseName;
         this.courseDetails = courseDetails;
-        this.tags = tags;
-        this.student = student;
+        this.available = available;
         this.courseUri = courseUri;
-        this.professorId = professorId;
         this.profileUri = profileUri;
+        this.myDate = myDate;
+        this.tags = tags;
+        this.professorId = professorId;
+        this.student = student;
+    }
+
+    public List<MyDate> getMyDate() {
+        return myDate;
+    }
+
+    public void setMyDate(List<MyDate> myDate) {
+        this.myDate = myDate;
     }
 
     public String getCourseUri() {
@@ -73,12 +85,12 @@ public class Course {
         this.available = available;
     }
 
-    public String getTaughtBy() {
-        return taughtBy;
+    public String getName() {
+        return name;
     }
 
-    public void setTaughtBy(String taughtBy) {
-        this.taughtBy = taughtBy;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAboutProfessor() {

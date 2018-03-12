@@ -1,4 +1,4 @@
-package com.example.kbasa.teaching;
+package com.example.kbasa.teaching.students;
 import org.apache.http.*;
 import android.os.AsyncTask;
 import android.util.Log;

@@ -12,18 +12,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.kbasa.teaching.DataTypes.Course;
-import com.example.kbasa.teaching.EditCourseActivity;
+import com.example.kbasa.teaching.DataTypes.MyDate;
+import com.example.kbasa.teaching.InputFilterMinMax;
 import com.example.kbasa.teaching.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,21 +44,14 @@ import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class T_AddCourseActivity extends AppCompatActivity {
 
@@ -76,7 +72,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
     ProgressDialog progressBar;
     StorageReference storageRef;
     FirebaseStorage storage;
-
+    boolean flag=false;
 
     private Button btn_upload_v;
     private Button btn_upload_pic;
@@ -261,10 +257,40 @@ public class T_AddCourseActivity extends AppCompatActivity {
                         course.setTags(tags);
                         course.setProfessorId(user.getUid());
 
+                        List<MyDate> myDates = new ArrayList<>();
+
+                        TextView date1 = findViewById(R.id.showMyDate1);
+                        EditText hour1 = findViewById(R.id.hour1);
+                        hour1.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
+                        EditText minute1 = findViewById(R.id.min1) ;
+                        minute1.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
+                        myDates.add(new MyDate(date1.getText().toString(),
+                                Integer.parseInt(hour1.getText().toString()),
+                                Integer.parseInt(minute1.getText().toString())));
+
+                        TextView date2 = findViewById(R.id.showMyDate2);
+                        EditText hour2 = findViewById(R.id.hour2);
+                        hour2.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
+                        EditText minute2 = findViewById(R.id.min2);
+                        minute2.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
+                        myDates.add(new MyDate(date2.getText().toString(),
+                                Integer.parseInt(hour2.getText().toString()),
+                                Integer.parseInt(minute2.getText().toString())));
+
+                        TextView date3 = findViewById(R.id.showMyDate3);
+                        EditText hour3 = findViewById(R.id.hour3);
+                        hour3.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "24")});
+                        EditText minute3 = findViewById(R.id.min3) ;
+                        minute3.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
+                        myDates.add(new MyDate(date3.getText().toString(),
+                                Integer.parseInt(hour3.getText().toString()),
+                                Integer.parseInt(minute3.getText().toString())));
+                        course.setMyDate(myDates);
+
 
                         final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course");
 
-                        Log.i("louda child count", "start: " + course.getTaughtBy());
+                        Log.i("louda child count", "start: " + course.getName());
                         HashMap hm = new HashMap();
                         hm.put(courseId, course);
                         courseDB.updateChildren(hm);
@@ -284,6 +310,8 @@ public class T_AddCourseActivity extends AppCompatActivity {
                                         }});
                                     }
                                 }
+                                flag=true;
+
                             }
 
                             @Override
@@ -292,10 +320,11 @@ public class T_AddCourseActivity extends AppCompatActivity {
                             }
                         });
 
-                        Intent intent = new Intent(T_AddCourseActivity.this, EditCourseActivity.class);
-                        intent.putExtra("courseId", courseId);
-                        startActivity(intent);
-                        finish();
+                            Intent intent = new Intent(T_AddCourseActivity.this, ViewCourseActivity.class);
+                            intent.putExtra("courseId", courseId);
+                            startActivity(intent);
+                            finish();
+
                     }
                 });
             }
@@ -311,7 +340,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                                 // Month is 0 based so add 1
                                 .append(mMonth1 + 1).append("-")
                                 .append(mDay1).append("-")
-                                .append(mYear1).append(" "));
+                                .append(mYear1));
                 break;
             case 2:
                 this.mDateDisplay2.setText(
@@ -319,7 +348,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                                 // Month is 0 based so add 1
                                 .append(mMonth1 + 1).append("-")
                                 .append(mDay1).append("-")
-                                .append(mYear1).append(" "));
+                                .append(mYear1));
                 break;
             case 3:
                 this.mDateDisplay3.setText(
@@ -327,7 +356,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                                 // Month is 0 based so add 1
                                 .append(mMonth1 + 1).append("-")
                                 .append(mDay1).append("-")
-                                .append(mYear1).append(" "));
+                                .append(mYear1));
                 break;
         }
 

@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         studentFlag1 = true;
-        auth.signInWithEmailAndPassword(emailEditText.getText().toString(),passwordEditText.getText().toString())
+        auth.signInWithEmailAndPassword(/*emailEditText.getText().toString()*/"karthik@mail.com","k26616495"/*passwordEditText.getText().toString()*/)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
 
         teacherFlag1 = true;
-        auth.signInWithEmailAndPassword(emailEditText.getText().toString(),passwordEditText.getText().toString())
+        auth.signInWithEmailAndPassword("eskafif@scu.edu"/*emailEditText.getText().toString()*/,/*passwordEditText.getText().toString()*/"mobileapp")
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
