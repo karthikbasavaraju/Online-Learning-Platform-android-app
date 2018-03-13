@@ -117,8 +117,6 @@ public class StudentSearchActivity extends AppCompatActivity {
                         Intent intent = new Intent(StudentSearchActivity.this,EnrollActivity.class);
                         intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                         startActivity(intent);
-
-                        Toast.makeText(StudentSearchActivity.this, "You Clicked at " +web.get(position), Toast.LENGTH_SHORT).show();
                     }
                 });
 
