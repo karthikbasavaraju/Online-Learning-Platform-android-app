@@ -75,6 +75,11 @@ public class TeacherHomeActivity extends AppCompatActivity {
         // Bottom Nav-Bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         if(role.equals("student")) {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
+            db.updateChildren(new HashMap<String, Object>(){{put("tokenId",FirebaseInstanceId.getInstance().getToken());}});
+
+
+
 
             materialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
                 @Override
@@ -122,6 +127,16 @@ public class TeacherHomeActivity extends AppCompatActivity {
                 }
             });
         }else if(role.equals("teacher")) {
+
+            new Notification().onTokenRefresh();
+
+
+
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
+            db.updateChildren(new HashMap<String, Object>(){{put("tokenId",FirebaseInstanceId.getInstance().getToken());}});
+
+
+
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {

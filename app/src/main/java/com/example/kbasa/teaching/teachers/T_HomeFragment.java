@@ -103,19 +103,21 @@ public class T_HomeFragment extends Fragment {
                         }
 
                         ListView simpleGrid= view.findViewById(R.id.list_t_courses);
-                        CustomAdapter customAdapter = new CustomAdapter(getActivity().getApplicationContext(), vector);
-                        simpleGrid.setAdapter(customAdapter);
+                        if(getActivity().getApplicationContext()!=null) {
+                            CustomAdapter customAdapter = new CustomAdapter(getActivity().getApplicationContext(), vector);
+                            simpleGrid.setAdapter(customAdapter);
 
-                        simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                // set an Intent to Another Activity
-                                Intent intent = new Intent(getContext(), ViewCourseActivity.class);
-                                Map<String,String> temp = vector.get(position);
-                                intent.putExtra("courseId",temp.get("courseId") );
-                                startActivity(intent); // start Intent
-                            }
-                        });
+                            simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    // set an Intent to Another Activity
+                                    Intent intent = new Intent(getContext(), ViewCourseActivity.class);
+                                    Map<String, String> temp = vector.get(position);
+                                    intent.putExtra("courseId", temp.get("courseId"));
+                                    startActivity(intent); // start Intent
+                                }
+                            });
+                        }
                     }
 
                     @Override

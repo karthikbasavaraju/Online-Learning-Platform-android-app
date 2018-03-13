@@ -150,7 +150,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 PersonalDetails personalDetails = new PersonalDetails(firstNameEditText.getText().toString()+" "+lastNameEditText.getText().toString(),
                                         emailEditText.getText().toString(),null);
 
-                                Teacher teacher = new Teacher(personalDetails,"",null,null);
+                                Teacher teacher = new Teacher(personalDetails,"I am professor",null,null);
                                 HashMap hm = new HashMap();
                                 hm.put(auth.getUid(),teacher);
                                 databaseReference.updateChildren(hm);

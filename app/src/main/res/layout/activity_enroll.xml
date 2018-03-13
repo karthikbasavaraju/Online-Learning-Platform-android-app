@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img_teacher_profile"
-                android:text="ohe oyataro dieye asecir? Yie nietahas ona dosasa lo tola, ore rerus menejil regar ure la oramem tiyed hisop. Sehecot ayotaca pelewet isodini pacar taholes cativ tomis epepitie pogu. Rinade lime hiebeweh olel acefoci. Ces ego pef libit egiye etagie sibeliq: Direlo topara ame palo odorelel togire otab. Rab rorienas iti, icihinod ripop ute. Tavovep rib esubot sohori haha tere."
+                android:text="I am a professor"
                 />
         </RelativeLayout>
 

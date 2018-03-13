@@ -115,7 +115,7 @@ public class StudentSearchActivity extends AppCompatActivity {
                                             int position, long id) {
 
                         Intent intent = new Intent(StudentSearchActivity.this,EnrollActivity.class);
-                        intent.putExtra("courseId", (vector.get(position)).get("courseId"));
+                        intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                         startActivity(intent);
 
                         Toast.makeText(StudentSearchActivity.this, "You Clicked at " +web.get(position), Toast.LENGTH_SHORT).show();
@@ -149,11 +149,10 @@ public class StudentSearchActivity extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view,
                                                     int position, long id) {
 
-                                Intent intent = new Intent(StudentSearchActivity.this,ViewCourseActivity.class);
+                                Intent intent = new Intent(StudentSearchActivity.this,EnrollActivity.class);
                                 intent.putExtra("courseId", (tempDetails.get(position)).get("courseId"));
                                 startActivity(intent);
 
-                                Toast.makeText(StudentSearchActivity.this, "You Clicked at " +web.get(position), Toast.LENGTH_SHORT).show();
                             }
                         });
 

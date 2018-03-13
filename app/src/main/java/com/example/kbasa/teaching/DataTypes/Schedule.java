@@ -11,30 +11,22 @@ import java.util.TimeZone;
 
 public class Schedule {
 
-    String courseId;
-    String professorId;
+
+    String otherPersonsId;
     MyDate myDate;
 
-    public Schedule(String courseId, String professorId, MyDate myDate) {
-        this.courseId = courseId;
-        this.professorId = professorId;
+    public Schedule(String otherPersonsId, MyDate myDate) {
+        this.otherPersonsId = otherPersonsId;
         this.myDate = myDate;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getOtherPersonsId() {
+
+        return otherPersonsId;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getProfessorId() {
-        return professorId;
-    }
-
-    public void setProfessorId(String professorId) {
-        this.professorId = professorId;
+    public void setOtherPersonsId(String otherPersonsId) {
+        this.otherPersonsId = otherPersonsId;
     }
 
     public MyDate getMyDate() {

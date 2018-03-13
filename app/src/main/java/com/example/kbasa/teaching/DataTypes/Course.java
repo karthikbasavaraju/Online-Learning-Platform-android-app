@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,68 +23,12 @@ public class Course {
     List<MyDate> myDate;
     List<String> tags;
     String professorId;
-    List<HashMap<Integer,String>> student;   //To store student id and their status(enrolled or complete)
+    List<HashMap<String,MyDate>> schedules;   //To store students id and their status(enrolled or complete)
 
     public Course(){
-        available = true;
-        Log.i("DataConstructors","In Course");
+        schedules = new LinkedList<HashMap<String, MyDate>>();
     }
 
-    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available,
-                  String courseUri, String profileUri, List<MyDate> myDate, List<String> tags, String professorId,
-                  List<HashMap<Integer, String>> student) {
-        this.name = name;
-        this.aboutProfessor = aboutProfessor;
-        this.courseName = courseName;
-        this.courseDetails = courseDetails;
-        this.available = available;
-        this.courseUri = courseUri;
-        this.profileUri = profileUri;
-        this.myDate = myDate;
-        this.tags = tags;
-        this.professorId = professorId;
-        this.student = student;
-    }
-
-    public List<MyDate> getMyDate() {
-        return myDate;
-    }
-
-    public void setMyDate(List<MyDate> myDate) {
-        this.myDate = myDate;
-    }
-
-    public String getCourseUri() {
-        return courseUri;
-    }
-
-    public String getProfessorId() {
-        return professorId;
-    }
-
-    public void setProfessorId(String professorId) {
-        this.professorId = professorId;
-    }
-
-    public void setCourseUri(String uri) {
-        this.courseUri = uri;
-    }
-
-    public String getProfileUri() {
-        return profileUri;
-    }
-
-    public void setProfileUri(String profileUri) {
-        this.profileUri = profileUri;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 
     public String getName() {
         return name;
@@ -117,6 +62,38 @@ public class Course {
         this.courseDetails = courseDetails;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public String getCourseUri() {
+        return courseUri;
+    }
+
+    public void setCourseUri(String courseUri) {
+        this.courseUri = courseUri;
+    }
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
+
+    public List<MyDate> getMyDate() {
+        return myDate;
+    }
+
+    public void setMyDate(List<MyDate> myDate) {
+        this.myDate = myDate;
+    }
+
     public List<String> getTags() {
         return tags;
     }
@@ -125,11 +102,35 @@ public class Course {
         this.tags = tags;
     }
 
-    public List<HashMap<Integer, String>> getStudent() {
-        return student;
+    public String getProfessorId() {
+        return professorId;
     }
 
-    public void setStudent(List<HashMap<Integer, String>> student) {
-        this.student = student;
+    public void setProfessorId(String professorId) {
+        this.professorId = professorId;
+    }
+
+    public List<HashMap<String, MyDate>> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<HashMap<String, MyDate>> schedules) {
+        this.schedules = schedules;
+    }
+
+    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
+
+        this.name = name;
+        this.aboutProfessor = aboutProfessor;
+        this.courseName = courseName;
+        this.courseDetails = courseDetails;
+        this.available = available;
+        this.courseUri = courseUri;
+        this.profileUri = profileUri;
+        this.myDate = myDate;
+        this.tags = tags;
+        this.professorId = professorId;
+        this.schedules = schedules;
     }
 }
+

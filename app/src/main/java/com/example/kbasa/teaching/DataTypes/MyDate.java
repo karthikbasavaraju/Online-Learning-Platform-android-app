@@ -15,6 +15,8 @@ public class MyDate {
     int hour;
     int minute;
 
+    public MyDate(){}
+
     public MyDate(String s, int hour, int minute) {
         StringTokenizer stringTokenizer = new StringTokenizer(s,"-");
         ArrayList<Integer> arrayList = new ArrayList();
