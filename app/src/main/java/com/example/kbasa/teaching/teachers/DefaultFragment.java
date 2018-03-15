@@ -35,11 +35,10 @@ public class DefaultFragment extends DialogFragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                final DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course");
+
                 final String courseId = getArguments().getString("courseId");
-                db.updateChildren(new HashMap<String, Object>(){{put(courseId,null);}});
-                final DatabaseReference db1 = FirebaseDatabase.getInstance().getReference("Teacher").child(getArguments().getString("professorId")).child("courseOffered");
-                db1.updateChildren(new HashMap<String, Object>(){{put(courseId,null);}});
+                final DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
+                db.updateChildren(new HashMap<String, Object>(){{put("available",false);}});
 
                 Toast.makeText(getActivity(),"Course deleted",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), TeacherHomeActivity.class);

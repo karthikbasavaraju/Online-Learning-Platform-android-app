@@ -22,6 +22,7 @@ public class ViewCourseActivity extends AppCompatActivity {
 
     String courseId="";
     Course course = null;
+    Button enrollButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class ViewCourseActivity extends AppCompatActivity {
 
 
         Bundle b = getIntent().getExtras();
-
+        enrollButton = findViewById(R.id.btn_edit);
         if(b!=null){
             courseId = b.getString("courseId");
         }
@@ -64,6 +65,14 @@ public class ViewCourseActivity extends AppCompatActivity {
 
                 EditText tagsEditText = findViewById(R.id.tagEditView);
                 tagsEditText.setText(tags);
+                if(!course.isAvailable()){
+                    Log.i("EnrollActivity","Course Deleted");
+                    enrollButton.setText("  Course deleted  ");
+                    enrollButton.setEnabled(false);
+
+                }
+
+
 
             }
 
@@ -73,7 +82,7 @@ public class ViewCourseActivity extends AppCompatActivity {
             }
         });
 
-        Button enrollButton = findViewById(R.id.btn_edit);
+
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

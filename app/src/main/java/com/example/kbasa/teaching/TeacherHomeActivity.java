@@ -21,6 +21,7 @@ import com.example.kbasa.teaching.DataTypes.PersonalDetails;
 import com.example.kbasa.teaching.DataTypes.Teacher;
 import com.example.kbasa.teaching.DataTypes.UserData;
 import com.example.kbasa.teaching.students.HomeFragment;
+import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.T_AddCourseActivity;
 import com.example.kbasa.teaching.teachers.T_HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,13 +111,13 @@ public class TeacherHomeActivity extends AppCompatActivity {
                             transaction.addToBackStack(null);
                             transaction.commit();
                             break;
-                        /*case R.id.action_schedule:
+                        case R.id.action_schedule:
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.Fragment, new ScheduleFragment());
                             transaction.addToBackStack(null);
                             transaction.commit();
                             break;
-                        case R.id.action_profile:
+                       /* case R.id.action_profile:
                             transaction = getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.Fragment, new ProfileFragment());
                             transaction.addToBackStack(null);
@@ -150,16 +151,16 @@ public class TeacherHomeActivity extends AppCompatActivity {
                             break;
                         case R.id.action_schedule:
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new T_HomeFragment());
+                            transaction.replace(R.id.Fragment, new ScheduleFragment());
                             transaction.addToBackStack(null);
                             transaction.commit();
                             break;
-                        case R.id.action_profile:
+                        /*case R.id.action_profile:
                             transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.Fragment, new T_HomeFragment());
+                            transaction.replace(R.id.Fragment, new ProfileFragment());
                             transaction.addToBackStack(null);
                             transaction.commit();
-                            break;
+                            break;*/
                     }
                     return true;
                 }

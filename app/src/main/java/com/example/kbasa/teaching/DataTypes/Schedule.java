@@ -20,6 +20,9 @@ public class Schedule {
         this.myDate = myDate;
     }
 
+    public Schedule(){}
+
+
     public String getOtherPersonsId() {
 
         return otherPersonsId;

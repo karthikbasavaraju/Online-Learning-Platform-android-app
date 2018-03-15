@@ -21,6 +21,7 @@ public class Course {
     String courseUri;
     String profileUri;
     List<MyDate> myDate;
+    String professorTokenId;
     List<String> tags;
     String professorId;
     List<HashMap<String,MyDate>> schedules;   //To store students id and their status(enrolled or complete)
@@ -28,7 +29,6 @@ public class Course {
     public Course(){
         schedules = new LinkedList<HashMap<String, MyDate>>();
     }
-
 
     public String getName() {
         return name;
@@ -94,6 +94,14 @@ public class Course {
         this.myDate = myDate;
     }
 
+    public String getProfessorTokenId() {
+        return professorTokenId;
+    }
+
+    public void setProfessorTokenId(String professorTokenId) {
+        this.professorTokenId = professorTokenId;
+    }
+
     public List<String> getTags() {
         return tags;
     }
@@ -118,7 +126,7 @@ public class Course {
         this.schedules = schedules;
     }
 
-    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
+    public Course(String name, String aboutProfessor, String courseName, String courseDetails, boolean available, String courseUri, String profileUri, List<MyDate> myDate, String professorTokenId, List<String> tags, String professorId, List<HashMap<String, MyDate>> schedules) {
 
         this.name = name;
         this.aboutProfessor = aboutProfessor;
@@ -128,6 +136,7 @@ public class Course {
         this.courseUri = courseUri;
         this.profileUri = profileUri;
         this.myDate = myDate;
+        this.professorTokenId = professorTokenId;
         this.tags = tags;
         this.professorId = professorId;
         this.schedules = schedules;

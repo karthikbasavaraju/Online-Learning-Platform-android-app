@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +25,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayDeque;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Deque;
+import java.util.TimeZone;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean studentFlag1 = false;
     private boolean teacherFlag1 = false;
     private FirebaseAuth auth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         auth = FirebaseAuth.getInstance();
-
 
         //To check if user has logged in
         /*if(auth.getCurrentUser()!=null){

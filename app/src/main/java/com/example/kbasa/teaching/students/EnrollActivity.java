@@ -20,6 +20,7 @@ import android.widget.VideoView;
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.DataTypes.Schedule;
+import com.example.kbasa.teaching.DataTypes.ScheduleTracker;
 import com.example.kbasa.teaching.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -96,13 +98,19 @@ public class EnrollActivity extends AppCompatActivity {
 
 
                 for(int studentIndex = 0;studentIndex<course.getSchedules().size(); studentIndex++) {
-                    HashMap hm = (course.getSchedules().get(studentIndex));
                     if(((course.getSchedules().get(studentIndex))).containsKey(sId)){
                         Log.i("EnrollActivity","Already Enrolled");
                         enrollButton.setText("  Already Enrolled  ");
                         enrollButton.setEnabled(false);
                         break;
                     }
+                }
+
+                if(!course.isAvailable()){
+                    Log.i("EnrollActivity","Course Deleted");
+                    enrollButton.setText("  Course deleted  ");
+                    enrollButton.setEnabled(false);
+
                 }
 
 
@@ -138,13 +146,6 @@ public class EnrollActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,6 +174,21 @@ public class EnrollActivity extends AppCompatActivity {
                         temp.add(new HashMap(){{put(sId,myDate);}});
                         course.setSchedules(temp);
                         courseScheduleUpdate.updateChildren(new HashMap<String, Object>(){{put(courseId,course);}});
+
+                        DatabaseReference courseSchedule = FirebaseDatabase.getInstance().getReference("Schedules");
+                        final String key = courseSchedule.push().getKey();
+                        final ScheduleTracker scheduleTracker = new ScheduleTracker();
+                        scheduleTracker.setCourseId(courseId);
+                        scheduleTracker.setStudentId(sId);
+                        scheduleTracker.setProfessorId(course.getProfessorId());
+                        scheduleTracker.setStudentTokenId(FirebaseInstanceId.getInstance().getToken());
+                        scheduleTracker.setProfessorTokenId(course.getProfessorTokenId());
+                        scheduleTracker.setCourseName(course.getCourseName());
+                        scheduleTracker.setProfessorName(course.getName());
+                        scheduleTracker.setStudentName(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0]);
+                        scheduleTracker.setDate(myDate.toString());
+                        courseSchedule.updateChildren(new HashMap<String, Object>(){{put(key,scheduleTracker);}});
+
 
                         new RequestServerNotification(tokenId).execute();
                         Intent intent = new Intent(EnrollActivity.this,EnrollActivity.class);

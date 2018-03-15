@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
 
 
+
                 DatabaseReference student = FirebaseDatabase.getInstance().getReference("Student");
 
                 student.addValueEventListener(new ValueEventListener() {
@@ -147,7 +148,7 @@ public class HomeFragment extends Fragment {
 
 
 
-                recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_category);
+                recyclerView = view.findViewById(R.id.recycler_view_category);
                 recyclerView.setHasFixedSize(true);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);

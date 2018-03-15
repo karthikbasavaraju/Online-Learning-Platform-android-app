@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 
 import com.example.kbasa.teaching.DataTypes.Course;
+import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,7 +58,6 @@ public class T_EditCourseActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
                 course = dataSnapshot.getValue(Course.class);
-
 
                 EditText courseName = findViewById(R.id.courseNameTextView);
                 courseName.setText(course.getCourseName());
@@ -120,9 +120,33 @@ public class T_EditCourseActivity extends AppCompatActivity {
                 db.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.i("kkkk",String.valueOf(dataSnapshot.child(courseId).child("student").getChildrenCount()));
+                        Log.i("kkkk",String.valueOf(dataSnapshot.child(courseId).child("schedules").getChildrenCount()));
+                        int flag = 0;
+                        for(DataSnapshot dataSnapshot1:dataSnapshot.child(courseId).child("schedules").getChildren()){
+                            for(DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()){
+                                    MyDate myDate = dataSnapshot2.getValue(MyDate.class);
+                                    int index = myDate.compare(0);
+                                    if(index == 1){
+                                        Toast.makeText(T_EditCourseActivity.this,"Students have enrolled. Cannot delete the course",Toast.LENGTH_SHORT).show();
+                                        flag=1;
+                                    }
+                            }
+                        }
+                        if(flag==0){
+                            Bundle bundle = new Bundle();
+                            bundle.putString("courseId", courseId);
+                            bundle.putString("professorId", course.getProfessorId());
+                            DefaultFragment dialog = new DefaultFragment();
+                            dialog.setArguments(bundle);
+                            dialog.show(getSupportFragmentManager(),"my_dia");
+                        }
 
-                        if(dataSnapshot.child(courseId).child("student").getChildrenCount()==0 && dataSnapshot.child(courseId).exists()){
+
+
+
+
+
+                      /*  if(dataSnapshot.child(courseId).child("student").getChildrenCount()==0 && dataSnapshot.child(courseId).exists()){
 
                             Bundle bundle = new Bundle();
                             bundle.putString("courseId", courseId);
@@ -132,8 +156,8 @@ public class T_EditCourseActivity extends AppCompatActivity {
                             dialog.show(getSupportFragmentManager(),"my_dia");
                         }
                         else if(dataSnapshot.child(courseId).child("student").getChildrenCount()!=0 && dataSnapshot.child(courseId).exists()){
-                            Toast.makeText(T_EditCourseActivity.this,"Students have enrolled. Cannot delete the course",Toast.LENGTH_SHORT).show();
-                        }
+
+                        }*/
 
                     }
 
