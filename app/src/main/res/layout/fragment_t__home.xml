@@ -22,7 +22,7 @@
             android:id="@+id/btn_add_course"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="65dp"
             android:layout_gravity="right"
             android:padding="5dp"
             android:background="@color/colorAccent"

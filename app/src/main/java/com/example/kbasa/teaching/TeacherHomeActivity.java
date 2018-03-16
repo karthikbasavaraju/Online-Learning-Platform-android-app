@@ -11,8 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
-
+import android.support.v7.widget.Toolbar;
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.T_AddCourseActivity;
@@ -33,7 +32,6 @@ public class TeacherHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().hide();
         setContentView(R.layout.activity_home);
 
         Log.i("please","pleasae");
@@ -41,9 +39,9 @@ public class TeacherHomeActivity extends AppCompatActivity {
         role = b.getString("user");
 
         // Search Bar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarS);
-        setActionBar(toolbar);
-        getActionBar().setTitle("Search");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Search");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         materialSearchView = (MaterialSearchView)findViewById(R.id.search_view);
 

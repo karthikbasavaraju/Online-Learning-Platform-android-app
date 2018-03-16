@@ -41,7 +41,6 @@ public class SearchPageDisplay extends ArrayAdapter<String> implements Filterabl
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         txtTitle.setText(courseDetails.get("courseName"));
 
-
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
 
         Uri profileUri = Uri.parse(courseDetails.get("profileUri"));

@@ -41,7 +41,7 @@ public class StudentSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getSupportActionBar().hide();
+     //   this.getSupportActionBar().hide();
         setContentView(R.layout.activity_student_search);
 
 
