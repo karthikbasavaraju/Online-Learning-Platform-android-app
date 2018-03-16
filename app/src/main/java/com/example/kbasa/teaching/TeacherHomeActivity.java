@@ -7,38 +7,22 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.Toast;
+import android.widget.Toolbar;
 
-import com.example.kbasa.teaching.DataTypes.PersonalDetails;
-import com.example.kbasa.teaching.DataTypes.Teacher;
-import com.example.kbasa.teaching.DataTypes.UserData;
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.T_AddCourseActivity;
 import com.example.kbasa.teaching.teachers.T_HomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
 
 public class TeacherHomeActivity extends AppCompatActivity {
 
@@ -49,6 +33,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getSupportActionBar().hide();
         setContentView(R.layout.activity_home);
 
         Log.i("please","pleasae");
@@ -56,10 +41,10 @@ public class TeacherHomeActivity extends AppCompatActivity {
         role = b.getString("user");
 
         // Search Bar
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-  //      setSupportActionBar(toolbar);
-    //    getSupportActionBar().setTitle("Search");
-      //  toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarS);
+        setActionBar(toolbar);
+        getActionBar().setTitle("Search");
+        toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         materialSearchView = (MaterialSearchView)findViewById(R.id.search_view);
 
         // Set the default Fragment to HomeFragment

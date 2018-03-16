@@ -34,11 +34,9 @@
 
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".teachers.T_AddCourseActivity" />
-        <activity android:name=".TeacherHomeActivity" />
+        <activity android:name=".TeacherHomeActivity"/>
         <activity android:name=".teachers.T_EditCourseActivity" />
-        <activity android:name=".EditCourseActivity" />
         <activity android:name=".students.CourseIntroductionActivity" />
-        <activity android:name=".StudentHomeActivity" />
         <activity android:name=".StudentSearchActivity" />
         <activity android:name=".teachers.ViewCourseActivity" />
         <activity android:name=".students.EnrollActivity"></activity>

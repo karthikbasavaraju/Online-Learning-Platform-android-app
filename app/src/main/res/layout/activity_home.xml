@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
- <!--       <RelativeLayout
+        <RelativeLayout
             android:id="@+id/search_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <android.widget.Toolbar
+                android:id="@+id/toolbarS"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary" />
@@ -21,12 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
-    </RelativeLayout> -->
+    </RelativeLayout>
+<!--
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
+-->
 
 
     <android.support.design.widget.BottomNavigationView
