@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         courseCategories.add(new HashMap<String,String>(){{put("courseName","Music");put("resourceId",String.valueOf(R.drawable.music));}});
         courseCategories.add(new HashMap<String,String>(){{put("courseName","Marketing");put("resourceId",String.valueOf(R.drawable.marketing));}});
         courseCategories.add(new HashMap<String,String>(){{put("courseName","IT & Software");put("resourceId",String.valueOf(R.drawable.it));}});
-        courseCategories.add(new HashMap<String,String>(){{put("courseName","Health and Fitness");put("resourceId",String.valueOf(R.drawable.health));}});
+        courseCategories.add(new HashMap<String,String>(){{put("courseName","Fitness");put("resourceId",String.valueOf(R.drawable.health));}});
     }
 
 

@@ -40,6 +40,7 @@ public class EnrollActivity extends AppCompatActivity {
     Course course = null;
     String schedule=null;
     MyDate myDate = null;
+    String[] schedules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ public class EnrollActivity extends AppCompatActivity {
                 tagsEditText.setText(tags);
 
 
-                final String[] schedules = new String[(course.getMyDate()).size()];
+                schedules = new String[(course.getMyDate()).size()];
                 for(int i=0;i<course.getMyDate().size();i++){
                     schedules[i] = course.getMyDate().get(i).toString();
                 }
@@ -114,8 +115,7 @@ public class EnrollActivity extends AppCompatActivity {
                 }
 
 
-
-                Spinner scheduleSpinner = findViewById(R.id.scheduleSpinner);
+                final Spinner scheduleSpinner = findViewById(R.id.scheduleSpinner);
 
 
 
@@ -136,6 +136,44 @@ public class EnrollActivity extends AppCompatActivity {
 
                     }
                 });
+
+                DatabaseReference timings = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid())
+                        .child("courseTaken").child("schedules").child(courseId).child("myDate");
+                timings.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()){
+                            String s = "";
+                            s+=dataSnapshot.child("day").getValue(Long.class).toString();
+                            s+="-";
+                            s+=dataSnapshot.child("month").getValue(Long.class).toString();
+                            s+="-";
+                            s+=dataSnapshot.child("year").getValue(Long.class).toString();
+                            s+=" ";
+                            s+=dataSnapshot.child("hour").getValue(Long.class).toString();
+                            s+=":";
+                            s+=dataSnapshot.child("minute").getValue(Long.class).toString();
+                            Log.i("timings",s);
+                            schedules = new String[1];
+                            schedules[0]=s;
+                            ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(EnrollActivity.this,
+                                    android.R.layout.simple_spinner_item,schedules);
+
+                            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            scheduleSpinner.setAdapter(adapter1);
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
 
             }
 
@@ -162,6 +200,7 @@ public class EnrollActivity extends AppCompatActivity {
 
                         DatabaseReference studentScheduleUpdate = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid()).child("courseTaken").child("schedules");
                         final Schedule schedule1 = new Schedule(course.getProfessorId(),myDate);
+
                         studentScheduleUpdate.updateChildren(new HashMap<String, Object>(){{put(courseId,schedule1);}});
 
                         DatabaseReference teacherScheduleUpdate = FirebaseDatabase.getInstance().getReference("Teacher").child(course.getProfessorId()).child("courseTaken").child("schedules");

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 
 import com.example.kbasa.teaching.R;
+import com.example.kbasa.teaching.StudentSearchActivity;
+import com.example.kbasa.teaching.TeacherHomeActivity;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
@@ -64,6 +66,9 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
             public void onClick(View view) {
 
                 if (card == R.layout.category) {
+                    Intent intent = new Intent(context,StudentSearchActivity.class);
+                    intent.putExtra("tag", temp.get("courseName"));
+                    context.startActivity(intent);
 
                 } else {
                     Intent intent = new Intent(context,EnrollActivity.class);

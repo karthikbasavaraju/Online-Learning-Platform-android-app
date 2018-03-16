@@ -16,7 +16,7 @@
             android:id="@+id/btn_remove"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Reupload Video"
+            android:text="Remove course"
             android:textColor="#FFFFFF"
             android:layout_gravity="right"
             android:gravity="center"

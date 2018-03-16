@@ -64,6 +64,8 @@ public class RegistrationActivity extends AppCompatActivity {
         interestsEditText = findViewById(R.id.input_interests);
 
 
+
+
         if(studentToggleButton.isChecked())
             studentRegister();
         else if(teacherToggleButton.isChecked())
