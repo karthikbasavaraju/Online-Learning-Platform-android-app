@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
+import com.example.kbasa.teaching.FieldsOk;
+import com.example.kbasa.teaching.LoginActivity;
 import com.example.kbasa.teaching.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,25 +88,32 @@ public class T_EditCourseActivity extends AppCompatActivity {
         enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean fieldsOK = FieldsOk.validate(new EditText[] { findViewById(R.id.courseNameTextView),findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView) });
+                if(fieldsOK) {
 
-                String courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
-                String courseDetails = ((EditText) findViewById(R.id.descriptionTextView)).getText().toString();
-                String tag = ((EditText) findViewById(R.id.tagTextView)).getText().toString();
-                List<String> tags = new LinkedList<>();
-                StringTokenizer tag1 = new StringTokenizer(tag, ",");
-                while (tag1.hasMoreElements()) {
-                    tags.add(tag1.nextToken());
+                    String courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
+                    String courseDetails = ((EditText) findViewById(R.id.descriptionTextView)).getText().toString();
+                    String tag = ((EditText) findViewById(R.id.tagTextView)).getText().toString();
+                    List<String> tags = new LinkedList<>();
+                    StringTokenizer tag1 = new StringTokenizer(tag, ",");
+                    while (tag1.hasMoreElements()) {
+                        tags.add(tag1.nextToken());
+                    }
+
+                    course.setCourseName(courseName);
+                    course.setCourseDetails(courseDetails);
+                    course.setTags(tags);
+
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course");
+                    Toast.makeText(T_EditCourseActivity.this, "Changes Saved", Toast.LENGTH_SHORT).show();
+                    db.updateChildren(new HashMap<String, Object>() {{
+                        put(courseId, course);
+                    }});
+
                 }
-
-                course.setCourseName(courseName);
-                course.setCourseDetails(courseDetails);
-                course.setTags(tags);
-
-                DatabaseReference db = FirebaseDatabase.getInstance().getReference("Course");
-                Toast.makeText(T_EditCourseActivity.this,"Changes Saved",Toast.LENGTH_SHORT).show();
-                db.updateChildren(new HashMap<String, Object>(){{put(courseId,course);}});
-
-
+                else{
+                    Toast.makeText(T_EditCourseActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+                }
 
 
             }

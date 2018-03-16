@@ -26,7 +26,9 @@ import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Course;
 import com.example.kbasa.teaching.DataTypes.MyDate;
+import com.example.kbasa.teaching.FieldsOk;
 import com.example.kbasa.teaching.InputFilterMinMax;
+import com.example.kbasa.teaching.LoginActivity;
 import com.example.kbasa.teaching.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -181,155 +183,162 @@ public class T_AddCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final ProgressDialog dialog = new ProgressDialog(T_AddCourseActivity.this);
-                dialog.setMessage("uploading your course");
-                dialog.setIndeterminate(true);
-                dialog.show();
+                boolean fieldsOK = FieldsOk.validate(new EditText[] { findViewById(R.id.courseNameTextView),findViewById(R.id.descriptionTextView), findViewById(R.id.tagTextView) });
+                boolean filesOk =  FieldsOk.vlidate(new TextView[] { findViewById(R.id.tv_intro_video_name),findViewById(R.id.tv_intro_picture_name) });
+                if(fieldsOK && filesOk) {
+
+                    final ProgressDialog dialog = new ProgressDialog(T_AddCourseActivity.this);
+                    dialog.setMessage("uploading your course");
+                    dialog.setIndeterminate(true);
+                    dialog.show();
 
 
-                user = FirebaseAuth.getInstance();
-                teacherDB = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
-                course = new Course();
-                courseId = teacherDB.push().getKey();
+                    user = FirebaseAuth.getInstance();
+                    teacherDB = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("courseOffered");
+                    course = new Course();
+                    courseId = teacherDB.push().getKey();
 
 
-                InputStream videoStream = null;
-                InputStream picStream = null;
-                try {
-                    videoStream = new FileInputStream(new File(videoFilePath));
-                    picStream = new FileInputStream(new File(picFilePath));
-                } catch (Exception e) {
-                    Log.i("louda upload", "path : " + videoFilePath);
-                }
-
-                StorageReference mountainsRef = storageRef.child(courseId);
-
-
-                UploadTask picUploadTask = mountainsRef.child("pic").putStream(picStream);
-                picUploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
+                    InputStream videoStream = null;
+                    InputStream picStream = null;
+                    try {
+                        videoStream = new FileInputStream(new File(videoFilePath));
+                        picStream = new FileInputStream(new File(picFilePath));
+                    } catch (Exception e) {
+                        Log.i("louda upload", "path : " + videoFilePath);
                     }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Uri profileUri = taskSnapshot.getDownloadUrl();
-                        course.setProfileUri(profileUri.toString());
-                    }
-                });
 
-                UploadTask videoUploadTask = mountainsRef.child("video").putStream(videoStream);
-                videoUploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        dialog.dismiss();
-                        Toast.makeText(T_AddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        dialog.dismiss();
-                        Toast.makeText(T_AddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
-                        Uri videoUri = taskSnapshot.getDownloadUrl();
-                        Log.i("louda upload", videoUri.toString());
+                    StorageReference mountainsRef = storageRef.child(courseId);
 
 
-                        teacherDB.child(courseId).setValue("courseID");
+                    UploadTask picUploadTask = mountainsRef.child("pic").putStream(picStream);
+                    picUploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                        //Setting values to course from UI
-//                        aboutProfessor = ((EditText) findViewById(R.id.aboutProfessorTextView)).getText().toString();
-                        courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
-                        courseDetails = ((EditText) findViewById(R.id.descriptionTextView)).getText().toString();
-                        available = true;
-                        courseUri = videoUri.toString();
-                        tag = ((EditText) findViewById(R.id.tagTextView)).getText().toString();
-                        List<String> tags = new LinkedList<>();
-                        StringTokenizer tag1 = new StringTokenizer(tag, ",");
-                        while (tag1.hasMoreElements()) {
-                            tags.add(tag1.nextToken());
                         }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Uri profileUri = taskSnapshot.getDownloadUrl();
+                            course.setProfileUri(profileUri.toString());
+                        }
+                    });
 
-                        course.setAboutProfessor("I am professor");
-                        course.setCourseName(courseName);
-                        course.setCourseDetails(courseDetails);
-                        course.setAvailable(available);
-                        course.setCourseUri(courseUri);
-                        course.setTags(tags);
-                        course.setProfessorId(user.getUid());
-                        course.setName(user.getCurrentUser().getEmail().split("@")[0]);
-                        course.setProfessorTokenId(FirebaseInstanceId.getInstance().getToken());
-
-                        List<MyDate> myDates = new ArrayList<>();
-
-                        TextView date1 = findViewById(R.id.showMyDate1);
-                        EditText hour1 = findViewById(R.id.hour1);
-                        hour1.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
-                        EditText minute1 = findViewById(R.id.min1) ;
-                        minute1.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
-                        myDates.add(new MyDate(date1.getText().toString(),
-                                Integer.parseInt(hour1.getText().toString()),
-                                Integer.parseInt(minute1.getText().toString())));
-
-                        TextView date2 = findViewById(R.id.showMyDate2);
-                        EditText hour2 = findViewById(R.id.hour2);
-                        hour2.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "23")});
-                        EditText minute2 = findViewById(R.id.min2);
-                        minute2.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
-                        myDates.add(new MyDate(date2.getText().toString(),
-                                Integer.parseInt(hour2.getText().toString()),
-                                Integer.parseInt(minute2.getText().toString())));
-
-                        TextView date3 = findViewById(R.id.showMyDate3);
-                        EditText hour3 = findViewById(R.id.hour3);
-                        hour3.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "24")});
-                        EditText minute3 = findViewById(R.id.min3) ;
-                        minute3.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "59")});
-                        myDates.add(new MyDate(date3.getText().toString(),
-                                Integer.parseInt(hour3.getText().toString()),
-                                Integer.parseInt(minute3.getText().toString())));
-                        course.setMyDate(myDates);
+                    UploadTask videoUploadTask = mountainsRef.child("video").putStream(videoStream);
+                    videoUploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            dialog.dismiss();
+                            Toast.makeText(T_AddCourseActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            dialog.dismiss();
+                            Toast.makeText(T_AddCourseActivity.this, "success", Toast.LENGTH_SHORT).show();
+                            Uri videoUri = taskSnapshot.getDownloadUrl();
+                            Log.i("louda upload", videoUri.toString());
 
 
-                        final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course");
+                            teacherDB.child(courseId).setValue("courseID");
 
-                        Log.i("louda child count", "start: " + course.getName());
-                        HashMap hm = new HashMap();
-                        hm.put(courseId, course);
-                        courseDB.updateChildren(hm);
-                        Log.i("louda child count", "finished");
+                            //Setting values to course from UI
+//                        aboutProfessor = ((EditText) findViewById(R.id.aboutProfessorTextView)).getText().toString();
+                            courseName = ((EditText) findViewById(R.id.courseNameTextView)).getText().toString();
+                            courseDetails = ((EditText) findViewById(R.id.descriptionTextView)).getText().toString();
+                            available = true;
+                            courseUri = videoUri.toString();
+                            tag = ((EditText) findViewById(R.id.tagTextView)).getText().toString();
+                            List<String> tags = new LinkedList<>();
+                            StringTokenizer tag1 = new StringTokenizer(tag, ",");
+                            while (tag1.hasMoreElements()) {
+                                tags.add(tag1.nextToken());
+                            }
 
-                        DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("personalDetails");
+                            course.setAboutProfessor("I am professor");
+                            course.setCourseName(courseName);
+                            course.setCourseDetails(courseDetails);
+                            course.setAvailable(available);
+                            course.setCourseUri(courseUri);
+                            course.setTags(tags);
+                            course.setProfessorId(user.getUid());
+                            course.setName(user.getCurrentUser().getEmail().split("@")[0]);
+                            course.setProfessorTokenId(FirebaseInstanceId.getInstance().getToken());
 
-                        db.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    if (dataSnapshot1.getKey().equals("name")) {
-                                        Log.i("louda child count", dataSnapshot1.getValue(String.class));
-                                        final String s = dataSnapshot1.getValue(String.class);
-                                        courseDB.child(courseId).updateChildren(new HashMap() {{
-                                            put("name", s);
-                                        }});
+                            List<MyDate> myDates = new ArrayList<>();
+
+                            TextView date1 = findViewById(R.id.showMyDate1);
+                            EditText hour1 = findViewById(R.id.hour1);
+                            hour1.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
+                            EditText minute1 = findViewById(R.id.min1);
+                            minute1.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
+                            myDates.add(new MyDate(date1.getText().toString(),
+                                    Integer.parseInt(hour1.getText().toString()),
+                                    Integer.parseInt(minute1.getText().toString())));
+
+                            TextView date2 = findViewById(R.id.showMyDate2);
+                            EditText hour2 = findViewById(R.id.hour2);
+                            hour2.setFilters(new InputFilter[]{new InputFilterMinMax("0", "23")});
+                            EditText minute2 = findViewById(R.id.min2);
+                            minute2.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
+                            myDates.add(new MyDate(date2.getText().toString(),
+                                    Integer.parseInt(hour2.getText().toString()),
+                                    Integer.parseInt(minute2.getText().toString())));
+
+                            TextView date3 = findViewById(R.id.showMyDate3);
+                            EditText hour3 = findViewById(R.id.hour3);
+                            hour3.setFilters(new InputFilter[]{new InputFilterMinMax("0", "24")});
+                            EditText minute3 = findViewById(R.id.min3);
+                            minute3.setFilters(new InputFilter[]{new InputFilterMinMax("0", "59")});
+                            myDates.add(new MyDate(date3.getText().toString(),
+                                    Integer.parseInt(hour3.getText().toString()),
+                                    Integer.parseInt(minute3.getText().toString())));
+                            course.setMyDate(myDates);
+
+
+                            final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course");
+
+                            Log.i("louda child count", "start: " + course.getName());
+                            HashMap hm = new HashMap();
+                            hm.put(courseId, course);
+                            courseDB.updateChildren(hm);
+                            Log.i("louda child count", "finished");
+
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(user.getUid()).child("personalDetails");
+
+                            db.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                        if (dataSnapshot1.getKey().equals("name")) {
+                                            Log.i("louda child count", dataSnapshot1.getValue(String.class));
+                                            final String s = dataSnapshot1.getValue(String.class);
+                                            courseDB.child(courseId).updateChildren(new HashMap() {{
+                                                put("name", s);
+                                            }});
+                                        }
                                     }
+                                    flag = true;
+
                                 }
-                                flag=true;
 
-                            }
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
+                                }
+                            });
 
                             Intent intent = new Intent(T_AddCourseActivity.this, ViewCourseActivity.class);
                             intent.putExtra("courseId", courseId);
                             startActivity(intent);
                             finish();
 
-                    }
-                });
+                        }
+                    });
+                }
+                else
+                    Toast.makeText(T_AddCourseActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
             }
         });
 

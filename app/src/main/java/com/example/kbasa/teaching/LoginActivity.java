@@ -89,58 +89,63 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
 
+        boolean fieldsOK = FieldsOk.validate(new EditText[] { emailEditText,passwordEditText });
+        if(fieldsOK) {
+            studentFlag1 = true;
+            auth.signInWithEmailAndPassword(/*emailEditText.getText().toString()*/"karthik@mail.com", "k26616495"/*passwordEditText.getText().toString()*/)
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
 
-        studentFlag1 = true;
-        auth.signInWithEmailAndPassword(/*emailEditText.getText().toString()*/"karthik@mail.com","k26616495"/*passwordEditText.getText().toString()*/)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-
-                        final FirebaseAuth user = FirebaseAuth.getInstance();
-                        DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student");
-                        db.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                    if(dataSnapshot1.getKey().equals(user.getUid())){
-                                        studentFlag=true;
+                            final FirebaseAuth user = FirebaseAuth.getInstance();
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference("Student");
+                            db.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                        if (dataSnapshot1.getKey().equals(user.getUid())) {
+                                            studentFlag = true;
+                                        }
                                     }
+
+                                    if (studentFlag == true && studentFlag1 == true) {
+                                        Intent intent = new Intent(LoginActivity.this, TeacherHomeActivity.class);
+                                        intent.putExtra("user", "student");
+                                        startActivity(intent);
+                                        studentFlag1 = false;
+                                        studentFlag = false;
+                                        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        editor.putBoolean("IsStudent", true);
+                                        editor.putBoolean("IsTeacher", false);
+                                        editor.commit();
+                                        finish();
+                                    } else {
+                                        studentFlag = false;
+                                        studentFlag1 = false;
+                                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
 
-                                if(studentFlag==true && studentFlag1==true){
-                                    Intent intent = new Intent(LoginActivity.this,TeacherHomeActivity.class);
-                                    intent.putExtra("user","student");
-                                    startActivity(intent);
-                                    studentFlag1=false;
-                                    studentFlag=false;
-                                    SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putBoolean("IsStudent", true);
-                                    editor.putBoolean("IsTeacher", false);
-                                    editor.commit();
-                                    finish();
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
                                 }
-                                else {
-                                    studentFlag=false;
-                                    studentFlag1=false;
-                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this,"Login failed",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else{
+            if(!fieldsOK)
+                Toast.makeText(LoginActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -149,7 +154,10 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
 
-        teacherFlag1 = true;
+        boolean fieldsOK = FieldsOk.validate(new EditText[] { emailEditText,passwordEditText });
+        if(fieldsOK) {
+
+            teacherFlag1 = true;
         auth.signInWithEmailAndPassword("eskafif@scu.edu"/*emailEditText.getText().toString()*/,/*passwordEditText.getText().toString()*/"mobileapp")
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -197,6 +205,9 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,"Login failed",Toast.LENGTH_SHORT).show();
                     }
                 });
+        }
+        else
+            Toast.makeText(LoginActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
     }
 
 }
