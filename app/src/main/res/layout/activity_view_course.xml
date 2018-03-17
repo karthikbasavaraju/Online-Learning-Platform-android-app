@@ -33,7 +33,8 @@
             android:layout_marginHorizontal="20dp"
             android:enabled="false"
             android:id="@+id/courseNameTextView"
-            android:textSize="20sp"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,6 +52,8 @@
             android:id="@+id/descriptionTextView"
             android:layout_marginHorizontal="20dp"
             android:inputType="textMultiLine"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
             android:gravity="left|top"/>
 
         <TextView
@@ -64,11 +67,12 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:enabled="false"
             android:id="@+id/tagEditView"
             android:layout_marginHorizontal="20dp"
-            android:inputType="textMultiLine"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
             android:gravity="left|top"/>
         <Button
             android:id="@+id/btn_edit"
@@ -78,6 +82,7 @@
             android:textColor="#FFFFFF"
             android:layout_gravity="center"
             android:gravity="center"
+            android:layout_margin="20dp"
             android:background="@color/colorPrimary"/>
 
 
