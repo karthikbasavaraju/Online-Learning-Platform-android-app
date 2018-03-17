@@ -37,8 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:id="@+id/courseNameTextView"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
             android:hint="Enter course name here..."/>
 
         <TextView
@@ -57,8 +56,6 @@
             android:layout_marginHorizontal="20dp"
             android:hint="Enter course description here..."
             android:inputType="textMultiLine"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryDark"
             android:gravity="left|top"/>
 
         <TextView
@@ -236,8 +233,6 @@
             android:layout_marginHorizontal="20dp"
             android:id="@+id/tagTextView"
             android:hint="Please separate tags with ','"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryDark"
             android:gravity="left|top"/>
 
 
@@ -249,7 +244,6 @@
             android:textColor="#FFFFFF"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_margin="20dp"
             android:background="@color/colorPrimary"/>
 
 

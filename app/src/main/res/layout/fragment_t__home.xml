@@ -36,7 +36,7 @@
         android:id="@+id/list_t_courses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="25dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="20dp" />
 
 </LinearLayout>

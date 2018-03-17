@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="10dp"
-    android:paddingVertical="10dp"
     android:orientation="vertical">
     <ImageView
         android:id="@+id/icon"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
         android:scaleType="fitXY"
         android:layout_gravity="center_horizontal" />
 
@@ -24,6 +23,5 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:text="Hello"
-        android:textSize="16sp"
         android:textColor="#000000" />
 </LinearLayout>

@@ -17,7 +17,9 @@
     <ListView
         android:id="@+id/wikiLinks"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:divider="#37c3e6"
+        android:dividerHeight="1dp"></ListView>
 
 
 </LinearLayout>
