@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
+            android:textColor="@drawable/edittextdrawable"
             android:enabled="false"
             android:id="@+id/courseNameTextView"
             android:textSize="16sp"
@@ -51,6 +52,7 @@
             android:enabled="false"
             android:id="@+id/descriptionTextView"
             android:layout_marginHorizontal="20dp"
+            android:textColor="@drawable/edittextdrawable"
             android:inputType="textMultiLine"
             android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
@@ -73,6 +75,8 @@
             android:layout_marginHorizontal="20dp"
             android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
+            android:textColor="@drawable/edittextdrawable"
+            android:inputType="textMultiLine"
             android:gravity="left|top"/>
 
         <LinearLayout

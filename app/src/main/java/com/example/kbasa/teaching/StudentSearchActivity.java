@@ -121,7 +121,8 @@ public class StudentSearchActivity extends AppCompatActivity {
                 });
 
                 SearchView sv = findViewById(R.id.searchButton);
-
+                sv.setQuery(tagQuery, false);
+                sv.clearFocus();
 
                 sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override

@@ -38,6 +38,7 @@ import java.util.Vector;
 
 public class ScheduleFragment extends Fragment {
 
+    Integer DURATION = 60;
     public ScheduleFragment() {
         // Required empty public constructor
     }
@@ -61,7 +62,9 @@ public class ScheduleFragment extends Fragment {
         upcoming = new Vector<>();
         onGoing = new HashMap(){{put("courseName","No on-going");}};
 
+
         DatabaseReference course = FirebaseDatabase.getInstance().getReference("Course");
+
 
         course.addValueEventListener(new ValueEventListener() {
             @Override
@@ -115,7 +118,7 @@ public class ScheduleFragment extends Fragment {
                         for(DataSnapshot dataSnapshot1 : scheduleList.getChildren()){
                             Schedule details = dataSnapshot1.getValue(Schedule.class);
                             MyDate myDate = details.getMyDate();
-                            int type = myDate.compare(60);
+                            int type = myDate.compare(DURATION);
                             if(type==0){
                                 onGoing = new HashMap(vector.get(dataSnapshot1.getKey()));
                             }

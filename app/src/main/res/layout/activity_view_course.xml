@@ -25,7 +25,8 @@
             android:layout_marginVertical="10dp"
             android:text="Course Name"
             android:textSize="22sp"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -51,6 +52,7 @@
             android:enabled="false"
             android:id="@+id/descriptionTextView"
             android:layout_marginHorizontal="20dp"
+            android:textColor="@drawable/edittextdrawable"
             android:inputType="textMultiLine"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
@@ -70,6 +72,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:id="@+id/tagEditView"
+            android:textColor="@drawable/edittextdrawable"
             android:layout_marginHorizontal="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"

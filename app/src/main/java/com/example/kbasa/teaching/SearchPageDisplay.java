@@ -10,6 +10,9 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,12 +44,13 @@ public class SearchPageDisplay extends ArrayAdapter<String> implements Filterabl
         TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
         txtTitle.setText(courseDetails.get("courseName"));
 
+        TextView name = (TextView) rowView.findViewById(R.id.name);
+        name.setText(courseDetails.get("name"));
+
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
 
-        Uri profileUri = Uri.parse(courseDetails.get("profileUri"));
-        imageView.setTag(profileUri);
-        new DownloadImageTask().execute(imageView);
 
+        Picasso.with(getContext()).load(courseDetails.get("profileUri")).into(imageView);
         return rowView;
     }
 }

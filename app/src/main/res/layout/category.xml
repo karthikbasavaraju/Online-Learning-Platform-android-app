@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ImageView
         android:id="@+id/icon"
         android:layout_width="match_parent"
@@ -32,4 +33,3 @@
         </LinearLayout>
 
 
-</android.support.v7.widget.CardView>
