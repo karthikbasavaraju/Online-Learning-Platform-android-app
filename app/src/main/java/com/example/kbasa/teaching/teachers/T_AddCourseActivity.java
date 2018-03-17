@@ -115,7 +115,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new MaterialFilePicker()
                         .withActivity(T_AddCourseActivity.this)
-                        .withFilter(Pattern.compile("[a-z]*.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
+                       // .withFilter(Pattern.compile(".*\\.(mp4|MP4|Mp4|mP4|avi|flv|wmv)$"))
                         .withRequestCode(1)
                         .start();
             }
@@ -125,7 +125,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 new MaterialFilePicker()
                         .withActivity(T_AddCourseActivity.this)
-                        .withFilter(Pattern.compile("[a-z]*.(jpg|png|gif|bmp)$"))
+                        //.withFilter(Pattern.compile(".*\\.(jpg|png|gif|bmp)$"))
                         .withRequestCode(2)
                         .start();
             }

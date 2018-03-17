@@ -50,26 +50,26 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
         auth = FirebaseAuth.getInstance();
-
         //To check if user has logged in
-        /*if(auth.getCurrentUser()!=null){
+        if(auth.getCurrentUser()!=null){
             SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
             boolean userType = sharedPref.getBoolean("IsTeacher",false);
             //Which type of user
             //Teacher
             if(userType==true){
                 Intent intent = new Intent(this,TeacherHomeActivity.class);
+                intent.putExtra("user", "teacher");
                 startActivity(intent);
                 finish();
             }
             //Student
             else{
-                Intent intent = new Intent(this, StudentHomeActivity.class);
+                Intent intent = new Intent(this, TeacherHomeActivity.class);
+                intent.putExtra("user", "student");
                 startActivity(intent);
                 finish();
             }
-        }*/
-
+        }
 
 
     }
@@ -121,9 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.commit();
                                         finish();
                                     } else {
-                                        studentFlag = false;
-                                        studentFlag1 = false;
-                                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                        if(studentFlag || studentFlag1) {
+                                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                            studentFlag = false;
+                                            studentFlag1 = false;
+                                        }
                                     }
 
                                 }
@@ -138,7 +140,11 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                            if(studentFlag || studentFlag1) {
+                                Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                studentFlag = false;
+                                studentFlag1 = false;
+                            }
                         }
                     });
         }
@@ -181,15 +187,17 @@ public class LoginActivity extends AppCompatActivity {
                                     teacherFlag=false;
                                     SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putBoolean("IsTeacher", false);
-                                    editor.putBoolean("IsStudent", true);
+                                    editor.putBoolean("IsTeacher", true);
+                                    editor.putBoolean("IsStudent", false);
                                     editor.commit();
                                     finish();
                                 }
                                 else {
-                                    teacherFlag1 = false;
-                                    teacherFlag=false;
-                                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                    if(teacherFlag || teacherFlag1) {
+                                        Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                                        teacherFlag1 = false;
+                                        teacherFlag = false;
+                                    }
                                 }
                             }
                             @Override
@@ -202,7 +210,11 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this,"Login failed",Toast.LENGTH_SHORT).show();
+                        if(teacherFlag || teacherFlag1) {
+                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                            teacherFlag1 = false;
+                            teacherFlag = false;
+                        }
                     }
                 });
         }

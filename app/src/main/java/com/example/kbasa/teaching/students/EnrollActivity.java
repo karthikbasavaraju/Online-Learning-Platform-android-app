@@ -229,7 +229,7 @@ public class EnrollActivity extends AppCompatActivity {
                         courseSchedule.updateChildren(new HashMap<String, Object>(){{put(key,scheduleTracker);}});
 
 
-                        new RequestServerNotification(tokenId).execute();
+                        new RequestServerNotification(tokenId,FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0],course.getCourseName()).execute();
                         Intent intent = new Intent(EnrollActivity.this,EnrollActivity.class);
                         intent.putExtra("courseId",courseId);
                         Toast.makeText(EnrollActivity.this,"You have enrolled into "+course.getCourseName()+" course",Toast.LENGTH_SHORT).show();

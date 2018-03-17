@@ -4,20 +4,24 @@
     >
 
     <item
+
         android:id="@+id/action_home"
         android:enabled="true"
+        app:tabTextAppearance="@style/customActionBar"
         android:title="Home"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_schedule"
         android:enabled="true"
+        app:tabTextAppearance="@style/customActionBar"
         android:title="Schedule"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_profile"
         android:enabled="true"
+        app:tabTextAppearance="@style/customActionBar"
         android:title="Profile"
         app:showAsAction="ifRoom" />
 

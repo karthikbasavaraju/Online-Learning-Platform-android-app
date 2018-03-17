@@ -1,10 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.kbasa.teaching.TeacherHomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
     <TextView
         android:id="@+id/tv_Category"
         android:layout_width="match_parent"
@@ -41,7 +46,7 @@
         android:id="@+id/tv_Ongoing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ongoing"
+        android:text="Your courses"
         android:textSize="22dp"
         android:textColor="@color/colorAccent"
         android:fontFamily="sans-serif-condensed"
@@ -53,5 +58,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

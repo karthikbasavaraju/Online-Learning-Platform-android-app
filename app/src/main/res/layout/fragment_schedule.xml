@@ -15,6 +15,7 @@
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="13sp"
             android:layout_weight="1"
             android:text="Past" />
 
@@ -23,6 +24,7 @@
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="13dp"
             android:layout_weight="1"
             android:text="Ongoing" />
 
@@ -30,6 +32,7 @@
             android:id="@+id/btn_upcoming"
             style="?attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
+            android:textSize="13sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Upcoming" />

@@ -8,12 +8,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo"
         android:label="*_*"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,14 +33,14 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".teachers.T_AddCourseActivity" />
-        <activity android:name=".TeacherHomeActivity"/>
-        <activity android:name=".teachers.T_EditCourseActivity" />
-        <activity android:name=".students.CourseIntroductionActivity" />
-        <activity android:name=".StudentSearchActivity" />
-        <activity android:name=".teachers.ViewCourseActivity" />
-        <activity android:name=".students.EnrollActivity"></activity>
+        <activity android:name=".RegistrationActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.T_AddCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".TeacherHomeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.T_EditCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".students.CourseIntroductionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".StudentSearchActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".teachers.ViewCourseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".students.EnrollActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -15,9 +15,13 @@ import java.io.UnsupportedEncodingException;
 class RequestServerNotification extends AsyncTask<Void, Void, Void> {
 
     String tokenId="";
+    String studentName ="";
+    String courseName="";
 
-    RequestServerNotification(String tokenId){
+    RequestServerNotification(String tokenId, String studentName, String courseName){
         this.tokenId =tokenId;
+        this.courseName = courseName;
+        this.studentName = studentName;
     }
 
     @Override
@@ -35,7 +39,7 @@ class RequestServerNotification extends AsyncTask<Void, Void, Void> {
      //   tokenId = "ewTvZQEcACA:APA91bFiCgbQ9ogc2SS7GXjJn-zKt3bPqc7SdFzAVQvzbj2NejU9R2h70y0EI0b1pi6WJ9GBOSW60UxvFomEWJQTAnybClatTwt7oc_EP3nVWdeLld-VrmLHo5o0oqwjHISClYajdWVF";
         Log.i("tokenId",tokenId);
         try {
-            StringEntity paramsEntity = new StringEntity("{\"to\":\""+ tokenId+"\",\"notification\":{\"body\":\"Some one enrolled in your class\",\"title\":\"Hurrah\"}}");
+            StringEntity paramsEntity = new StringEntity("{\"to\":\""+ tokenId+"\",\"notification\":{\"body\":\""+studentName+" enrolled in your "+courseName+" class\",\"title\":\"You have a new student\"}}");
             httpost.setEntity(paramsEntity);
         }catch (UnsupportedEncodingException exception) {
             exception.printStackTrace();

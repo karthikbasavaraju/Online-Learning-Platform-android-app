@@ -1,13 +1,19 @@
 package com.example.kbasa.teaching.teachers;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.example.kbasa.teaching.DataTypes.Course;
@@ -23,6 +29,8 @@ public class ViewCourseActivity extends AppCompatActivity {
     String courseId="";
     Course course = null;
     Button enrollButton;
+    VideoView videoViewLandscape;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +52,10 @@ public class ViewCourseActivity extends AppCompatActivity {
                 Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
                 course = dataSnapshot.getValue(Course.class);
 
+                uri = Uri.parse(course.getCourseUri());
+                videoViewLandscape = findViewById(R.id.introVideoView);
+                new StreamVideo().execute();
 
-                Uri uri = Uri.parse(course.getCourseUri());
-                VideoView videoViewLandscape = findViewById(R.id.introVideoView);
-                videoViewLandscape.setVideoURI(uri);
-                videoViewLandscape.requestFocus();
-                videoViewLandscape.start();
 
                 EditText courseName = findViewById(R.id.courseNameTextView);
                 courseName.setText(course.getCourseName());
@@ -116,4 +122,48 @@ public class ViewCourseActivity extends AppCompatActivity {
 
 
     }
+
+    private class StreamVideo extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            try {
+                // Start the MediaController
+                MediaController mediacontroller = new MediaController(
+                        ViewCourseActivity.this);
+                mediacontroller.setAnchorView(findViewById(R.id.introVideoView));
+                // Get the URL from String VideoURL
+                videoViewLandscape.setMediaController(mediacontroller);
+                videoViewLandscape.setVideoURI(uri);
+
+                videoViewLandscape.requestFocus();
+                videoViewLandscape.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    // Close the progress bar and play the video
+                    public void onPrepared(MediaPlayer mp) {
+                        videoViewLandscape.start();
+                    }
+                });
+            } catch (Exception e) {
+                pDialog.dismiss();
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
 }

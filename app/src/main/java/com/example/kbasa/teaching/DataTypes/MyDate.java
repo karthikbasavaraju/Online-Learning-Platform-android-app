@@ -50,7 +50,7 @@ public class MyDate {
     }
 
     public String toString(){
-        return month+":"+day+":"+year+" "+hour+":"+minute;
+        return month+"-"+day+"-"+year+" "+hour+":"+minute;
     }
 
     public int getYear() {

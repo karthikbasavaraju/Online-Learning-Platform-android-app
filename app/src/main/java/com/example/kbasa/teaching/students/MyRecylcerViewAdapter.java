@@ -9,15 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
 import com.example.kbasa.teaching.R;
 import com.example.kbasa.teaching.StudentSearchActivity;
-import com.example.kbasa.teaching.TeacherHomeActivity;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -59,6 +53,8 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
         } else {
             Uri uri = Uri.parse(temp.get("profileUri"));
             Picasso.with(context).load(uri).into(holder.imageView);
+            holder.professor.setText(temp.get("name"));
+
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,11 +85,13 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
 
         public TextView mTitle;
         public ImageView imageView;
+        public TextView professor;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTitle = itemView.findViewById(R.id.title);
             imageView = itemView.findViewById(R.id.icon);
+            professor = itemView.findViewById(R.id.professor);
         }
     }
 }

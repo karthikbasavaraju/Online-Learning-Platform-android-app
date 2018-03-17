@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ import java.util.regex.Pattern;
 public class ProfileFragment extends Fragment {
 
     static String picFilePath=null;
+    boolean flag1;
+    boolean flag2;
 
     ImageView imageView;
     public ProfileFragment() {
@@ -65,11 +68,11 @@ public class ProfileFragment extends Fragment {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialFilePicker()
-                        .withActivity(getActivity())
+                new MaterialFilePicker().withActivity(getActivity())
                         .withFilter(Pattern.compile("[a-z]*.(jpg|png|gif|bmp)$"))
                         .withRequestCode(1)
                         .start();
+
             }
         });
 
@@ -77,12 +80,15 @@ public class ProfileFragment extends Fragment {
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("profilePic").exists()){
+                if(dataSnapshot.child("profilePic").exists() ){
                     String profilePic = dataSnapshot.child("profilePic").getValue(String.class);
                     Picasso.with(getActivity().getApplicationContext()).load(profilePic).into(imageView);
-
                 }
-                name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
+
+                if(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class)!=null){
+                    name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
+                    flag1=true;
+                }
             }
 
             @Override
@@ -91,6 +97,37 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        DatabaseReference studentDB = FirebaseDatabase.getInstance().getReference("Student").child(auth.getUid());
+        studentDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("profilePic").exists() ) {
+                    String profilePic = dataSnapshot.child("profilePic").getValue(String.class);
+                    Picasso.with(getActivity().getApplicationContext()).load(profilePic).into(imageView);
+
+                }
+                if (dataSnapshot.child("personalDetails").child("fullName").getValue(String.class)!=null) {
+                    name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
+                    flag2=true;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Button logout = view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
@@ -98,38 +135,40 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        Log.i("profilePic",picFilePath);
-        if(picFilePath!=null){
-            final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
-            InputStream picStream = null;
-            try {
-                picStream = new FileInputStream(new File(picFilePath));
-            } catch (Exception e) {
-                Log.i("louda upload", "path : " + picStream);
+      //  super.onActivityResult(requestCode, resultCode, data);
+        Log.i("profilePic", picFilePath);
+
+        if (requestCode == 1 && resultCode == -1) {
+            File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+            picFilePath = f.getAbsolutePath();
+
+            if (picFilePath != null) {
+                final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
+                InputStream picStream = null;
+                try {
+                    picStream = new FileInputStream(new File(picFilePath));
+                } catch (Exception e) {
+                    Log.i("louda upload", "path : " + picStream);
+                }
+
+                StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
+
+                UploadTask picUploadTask = mountainsRef.child("pic").putStream(picStream);
+                picUploadTask.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        final Uri profileUri = taskSnapshot.getDownloadUrl();
+                        courseDB.updateChildren(new HashMap<String, Object>() {{
+                            put("profilePic", profileUri);
+                        }});
+                    }
+                });
             }
-
-            StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
-
-
-            UploadTask picUploadTask = mountainsRef.child("pic").putStream(picStream);
-            picUploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    final Uri profileUri = taskSnapshot.getDownloadUrl();
-                    courseDB.updateChildren(new HashMap<String, Object>(){{put("profilePic",profileUri);}});
-
-                }
-            });
-
         }
-
     }
-
-
 }

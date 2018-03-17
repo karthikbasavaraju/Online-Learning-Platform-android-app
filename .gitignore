@@ -7,3 +7,7 @@
 /build
 /captures
 .externalNativeBuild
+app/src/main/res/layout/row.xml
+app/src/main/res/layout/category.xml
+app/src/main/res/layout/row.xml
+app/src/main/res/layout/category.xml
