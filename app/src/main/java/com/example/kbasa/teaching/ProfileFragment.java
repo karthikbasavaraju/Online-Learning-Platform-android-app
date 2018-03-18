@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 new MaterialFilePicker().withActivity(getActivity())
-                        .withFilter(Pattern.compile("[a-z]*.(jpg|png|gif|bmp)$"))
+                        .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
                         .withRequestCode(1)
                         .start();
 
@@ -80,13 +80,9 @@ public class ProfileFragment extends Fragment {
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("profilePic").exists() ){
-                    String profilePic = dataSnapshot.child("profilePic").getValue(String.class);
-                    Picasso.with(getActivity().getApplicationContext()).load(profilePic).into(imageView);
-                }
-
                 if(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class)!=null){
                     name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
+                    Picasso.with(getContext()).load(dataSnapshot.child("profileUri").getValue(String.class)).into(imageView);
                     flag1=true;
                 }
             }
@@ -108,6 +104,7 @@ public class ProfileFragment extends Fragment {
                 }
                 if (dataSnapshot.child("personalDetails").child("fullName").getValue(String.class)!=null) {
                     name.setText(dataSnapshot.child("personalDetails").child("fullName").getValue(String.class));
+                    Picasso.with(getContext()).load(dataSnapshot.child("profileUri").getValue(String.class)).into(imageView);
                     flag2=true;
                 }
             }
@@ -133,6 +130,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
+/*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
       //  super.onActivityResult(requestCode, resultCode, data);
@@ -171,4 +169,5 @@ public class ProfileFragment extends Fragment {
             }
         }
     }
+*/
 }

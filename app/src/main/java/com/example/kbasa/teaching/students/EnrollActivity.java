@@ -1,7 +1,6 @@
 package com.example.kbasa.teaching.students;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public class EnrollActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class EnrollActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enroll);
+        setContentView(R.layout.student_enroll);
 
         final String sId = FirebaseAuth.getInstance().getUid();
         Bundle b = getIntent().getExtras();
@@ -57,16 +58,35 @@ public class EnrollActivity extends AppCompatActivity {
         }
         Log.i("test courseId",courseId);
 
+
         DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Course").child(courseId);
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("test - editcount : ",String.valueOf(dataSnapshot.getChildrenCount()));
                 course = dataSnapshot.getValue(Course.class);
+                DatabaseReference profileDB = FirebaseDatabase.getInstance().getReference("Teacher").child(course.getProfessorId()).child("profileUri");
+                profileDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.exists()) {
+                            Picasso.with(EnrollActivity.this).load(dataSnapshot.getValue(String.class)).into((ImageView) findViewById(R.id.img_teacher_profile));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
                 Uri uri = Uri.parse(course.getCourseUri());
+
                 VideoView videoViewLandscape = findViewById(R.id.introVideoView);
+                MediaController mediacontroller = new MediaController(
+                        EnrollActivity.this);
+                mediacontroller.setAnchorView(videoViewLandscape);
                 videoViewLandscape.setVideoURI(uri);
                 videoViewLandscape.requestFocus();
                 videoViewLandscape.start();

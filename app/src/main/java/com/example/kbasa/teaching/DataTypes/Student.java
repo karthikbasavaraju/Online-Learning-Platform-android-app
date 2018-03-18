@@ -14,6 +14,24 @@ import java.util.ArrayList;
 public class Student {
     PersonalDetails personalDetails;
     ArrayList<String> interests;
+    String profileUri;
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
+
+    public Student(PersonalDetails personalDetails, ArrayList<String> interests, String profileUri, CourseTaken courseTaken) {
+
+        this.personalDetails = personalDetails;
+        this.interests = interests;
+        this.profileUri = profileUri;
+        this.courseTaken = courseTaken;
+    }
+
     CourseTaken courseTaken;
 
     public Student(){

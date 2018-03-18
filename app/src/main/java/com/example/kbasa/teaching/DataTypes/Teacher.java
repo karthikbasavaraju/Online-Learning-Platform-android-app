@@ -15,6 +15,25 @@ import java.util.List;
 public class Teacher {
     PersonalDetails personalDetails;
     String aboutYou;
+    String profileUri;
+
+    public String getProfileUri() {
+        return profileUri;
+    }
+
+    public void setProfileUri(String profileUri) {
+        this.profileUri = profileUri;
+    }
+
+    public Teacher(PersonalDetails personalDetails, String aboutYou, String profileUri, List<Integer> courseOffered, CourseTaken courseTaken) {
+
+        this.personalDetails = personalDetails;
+        this.aboutYou = aboutYou;
+        this.profileUri = profileUri;
+        this.courseOffered = courseOffered;
+        this.courseTaken = courseTaken;
+    }
+
     List<Integer> courseOffered;
     CourseTaken courseTaken;
 

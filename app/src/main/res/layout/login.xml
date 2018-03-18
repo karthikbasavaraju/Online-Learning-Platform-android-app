@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context="com.example.kbasa.teaching.LoginActivity">
 
     <LinearLayout
         android:id="@+id/layout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
         android:layout_marginLeft="65dp">
 
         <TextView
@@ -24,10 +26,10 @@
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="227dp"
+            android:layout_marginLeft="43dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="karthik@mail.com"
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="Email ID" />
@@ -38,6 +40,7 @@
         android:id="@+id/layout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/layout_email"
         android:layout_alignStart="@+id/layout_email">
 
@@ -53,8 +56,8 @@
             android:id="@+id/passwordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="k26616495"
-            android:ems="10"
+            android:layout_marginLeft="8dp"
+            android:ems="11"
             android:hint="password"
             android:inputType="textPassword" />
 

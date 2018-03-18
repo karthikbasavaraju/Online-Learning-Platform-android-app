@@ -111,8 +111,8 @@
 
             <ImageView
                 android:id="@+id/img_teacher_profile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:background="@mipmap/ic_launcher"
                 android:layout_marginRight="8dp"/>
             <TextView

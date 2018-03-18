@@ -1,9 +1,11 @@
 package com.example.kbasa.teaching;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +23,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
+
+import static com.example.kbasa.teaching.ProfileFragment.picFilePath;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -36,8 +49,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private ToggleButton studentToggleButton;
     private ToggleButton teacherToggleButton;
     private EditText interestsEditText;
-
+    private String profile;
     private FirebaseAuth auth;
+    private String profileuri;
     private DatabaseReference databaseReference;
 
     @Override
@@ -97,7 +111,9 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     public void studentRegister(){
-        if(passwordEditText.getText().toString().equals(repasswordEditText.getText().toString())) {
+
+        boolean fieldsOK = FieldsOk.validate(new EditText[] { findViewById(R.id.input_first_name),findViewById(R.id.input_last_name),findViewById(R.id.input_password),findViewById(R.id.input_interests),findViewById(R.id.input_email) });
+        if(fieldsOK && profile!=null) {
             auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
@@ -115,15 +131,44 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
 
 
-                            Student student = new Student(personalDetails,interest,null);
-                            HashMap hm = new HashMap();
-                            hm.put(auth.getUid(),student);
-                            databaseReference.updateChildren(hm);
-                            Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
-                            finish();
+                            final Student student = new Student(personalDetails,interest,null);
 
+
+
+                            if (profile != null) {
+                                InputStream picStream = null;
+                                try {
+                                    picStream = new FileInputStream(new File(profile));
+                                } catch (Exception e) {
+                                    Log.i("louda upload", "path : " + picStream);
+                                }
+
+                                StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
+
+                                UploadTask picUploadTask = mountainsRef.child(FirebaseAuth.getInstance().getUid()).putStream(picStream);
+                                picUploadTask.addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        final Uri profileUri = taskSnapshot.getDownloadUrl();
+                                        student.setProfileUri(profileUri.toString());
+
+
+                                        HashMap hm = new HashMap();
+                                        hm.put(auth.getUid(),student);
+                                        databaseReference.updateChildren(hm);
+                                        Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+                                        startActivity(intent);
+                                        Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                        finish();
+
+                                    }
+                                });
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -134,14 +179,15 @@ public class RegistrationActivity extends AppCompatActivity {
                     });
         }
         else{
-            Toast.makeText(RegistrationActivity.this, "Password doesnt match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void teacherRegister(){
 
-            if(passwordEditText.getText().toString().equals(repasswordEditText.getText().toString())) {
-                auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
+        boolean fieldsOK = FieldsOk.validate(new EditText[] { findViewById(R.id.input_first_name),findViewById(R.id.input_last_name),findViewById(R.id.input_password),findViewById(R.id.input_interests),findViewById(R.id.input_email) });
+        if(fieldsOK && profile!=null) {
+            auth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
@@ -152,13 +198,45 @@ public class RegistrationActivity extends AppCompatActivity {
                                 PersonalDetails personalDetails = new PersonalDetails(firstNameEditText.getText().toString()+" "+lastNameEditText.getText().toString(),
                                         emailEditText.getText().toString(),null);
 
-                                Teacher teacher = new Teacher(personalDetails,"I am professor",null,null);
-                                HashMap hm = new HashMap();
-                                hm.put(auth.getUid(),teacher);
-                                databaseReference.updateChildren(hm);
-                                Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
-                                startActivity(intent);
-                                Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                final Teacher teacher = new Teacher(personalDetails,"I am professor",null,null);
+
+
+
+
+
+                                if (profile != null) {
+                                    InputStream picStream = null;
+                                    try {
+                                        picStream = new FileInputStream(new File(profile));
+                                    } catch (Exception e) {
+                                        Log.i("louda upload", "path : " + picStream);
+                                    }
+
+                                    StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
+
+                                    UploadTask picUploadTask = mountainsRef.child(FirebaseAuth.getInstance().getUid()).putStream(picStream);
+                                    picUploadTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+
+                                        }
+                                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            final Uri profileUri = taskSnapshot.getDownloadUrl();
+                                            teacher.setProfileUri(profileUri.toString());
+
+
+                                            HashMap hm = new HashMap();
+                                            hm.put(auth.getUid(), teacher);
+                                            databaseReference.updateChildren(hm);
+                                            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                                            startActivity(intent);
+                                            Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                                }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -169,9 +247,35 @@ public class RegistrationActivity extends AppCompatActivity {
                         });
             }
             else{
-                Toast.makeText(RegistrationActivity.this, "Password doesnt match", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             }
     }
+
+    public void profilePic(View v){
+        Button imageView = findViewById(R.id.btn_profilePic);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialFilePicker().withActivity(RegistrationActivity.this)
+                        .withFilter(Pattern.compile("[a-z]+.(jpg|png|gif|bmp)$"))
+                        .withRequestCode(1)
+                        .start();
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //  super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == -1) {
+            File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+            profile = f.getAbsolutePath();
+
+        }
+    }
+
 }
 
 

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 
@@ -106,11 +107,21 @@ public class HomeFragment extends Fragment {
                     web.add(tagVector.elementAt(i));
                 }
 
+                Vector recommended = new Vector(vector);
+                Random random = new Random();
+                while(recommended.size()>3) {
+                    recommended.remove(random.nextInt(recommended.size()));
+                }
+
+
                 recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_recommended);
                 recyclerView.setHasFixedSize(true);
+                recyclerView.setItemViewCacheSize(20);
+                recyclerView.setDrawingCacheEnabled(true);
+                recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(vector,getContext(),R.layout.row);
+                adapter = new MyRecylcerViewAdapter(recommended,getContext(),R.layout.student_recommended_view);
                 recyclerView.setAdapter(adapter);
 
 
@@ -133,9 +144,13 @@ public class HomeFragment extends Fragment {
 
                         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ongoing);
                         recyclerView.setHasFixedSize(true);
+                        recyclerView.setItemViewCacheSize(20);
+                        recyclerView.setDrawingCacheEnabled(true);
+                        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
                         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                         recyclerView.setLayoutManager(layoutManager);
-                        adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.row);
+                        adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.student_recommended_view);
                         recyclerView.setAdapter(adapter);
 
                     }
@@ -150,12 +165,18 @@ public class HomeFragment extends Fragment {
 
                 recyclerView = view.findViewById(R.id.recycler_view_category);
                 recyclerView.setHasFixedSize(true);
+                recyclerView.setItemViewCacheSize(20);
+                recyclerView.setDrawingCacheEnabled(true);
+                recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.category);
+                adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.student_category_view);
                 recyclerView.setAdapter(adapter);
 
             }
+
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

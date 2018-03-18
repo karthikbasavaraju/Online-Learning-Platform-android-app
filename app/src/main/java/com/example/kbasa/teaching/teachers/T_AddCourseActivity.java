@@ -338,7 +338,7 @@ public class T_AddCourseActivity extends AppCompatActivity {
                     });
                 }
                 else
-                    Toast.makeText(T_AddCourseActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(T_AddCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
             }
         });
 

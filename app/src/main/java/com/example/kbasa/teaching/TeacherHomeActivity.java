@@ -2,6 +2,8 @@ package com.example.kbasa.teaching;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+
 import com.example.kbasa.teaching.students.HomeFragment;
 import com.example.kbasa.teaching.students.ScheduleFragment;
 import com.example.kbasa.teaching.teachers.T_AddCourseActivity;
@@ -57,7 +61,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         // Search Bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Search");
+        getSupportActionBar().setTitle("Visdum");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         materialSearchView = (MaterialSearchView)findViewById(R.id.search_view);
 
@@ -198,10 +202,12 @@ public class TeacherHomeActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == -1) {
             File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
             picFilePath = f.getAbsolutePath();
-            finish();
-            //ProfileFragment.upload();
+           // new ImageLoaderAsync(picFilePath,(ImageView) findViewById(R.id.imageView)).execute();
+
         }
+        return;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

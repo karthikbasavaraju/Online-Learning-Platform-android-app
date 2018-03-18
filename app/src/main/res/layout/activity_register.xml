@@ -175,6 +175,27 @@
             android:textOn="Registering as teachers" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="7dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <Button
+            android:id="@+id/btn_profilePic"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="120dp"
+            android:layout_weight="2"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="profilePic"
+            android:layout_marginHorizontal="20dp"
+            android:text="Profile Pic"
+            android:textSize="20dp" />
+
 
     <Button
         android:id="@+id/btn_register"
@@ -187,5 +208,5 @@
         android:layout_marginHorizontal="20dp"
         android:text="Sign up"
         android:textSize="20dp" />
-
+    </LinearLayout>
 </LinearLayout>

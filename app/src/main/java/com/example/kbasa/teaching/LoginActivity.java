@@ -1,5 +1,6 @@
 package com.example.kbasa.teaching;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.kbasa.teaching.DataTypes.Student;
@@ -91,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean fieldsOK = FieldsOk.validate(new EditText[] { emailEditText,passwordEditText });
         if(fieldsOK) {
+            final ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setMessage("Loading");
+            dialog.setIndeterminate(true);
+            dialog.show();
             studentFlag1 = true;
             auth.signInWithEmailAndPassword(/*emailEditText.getText().toString()*/"karthik@mail.com", "k26616495"/*passwordEditText.getText().toString()*/)
                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -119,9 +125,11 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putBoolean("IsStudent", true);
                                         editor.putBoolean("IsTeacher", false);
                                         editor.commit();
+                                        dialog.dismiss();
                                         finish();
                                     } else {
                                         if(studentFlag || studentFlag1) {
+                                            dialog.dismiss();
                                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                             studentFlag = false;
                                             studentFlag1 = false;
@@ -132,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-
+                                    dialog.dismiss();
                                 }
                             });
                         }
@@ -141,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             if(studentFlag || studentFlag1) {
+                                dialog.dismiss();
                                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                 studentFlag = false;
                                 studentFlag1 = false;
@@ -150,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else{
             if(!fieldsOK)
-                Toast.makeText(LoginActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -162,7 +171,10 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean fieldsOK = FieldsOk.validate(new EditText[] { emailEditText,passwordEditText });
         if(fieldsOK) {
-
+            final ProgressDialog dialog = new ProgressDialog(this);
+            dialog.setMessage("Loading");
+            dialog.setIndeterminate(true);
+            dialog.show();
             teacherFlag1 = true;
         auth.signInWithEmailAndPassword("eskafif@scu.edu"/*emailEditText.getText().toString()*/,/*passwordEditText.getText().toString()*/"mobileapp")
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -190,10 +202,12 @@ public class LoginActivity extends AppCompatActivity {
                                     editor.putBoolean("IsTeacher", true);
                                     editor.putBoolean("IsStudent", false);
                                     editor.commit();
+                                    dialog.dismiss();
                                     finish();
                                 }
                                 else {
                                     if(teacherFlag || teacherFlag1) {
+                                        dialog.dismiss();
                                         Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                                         teacherFlag1 = false;
                                         teacherFlag = false;
@@ -202,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
-
+                                dialog.dismiss();
                             }
                         });
                     }
@@ -211,6 +225,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         if(teacherFlag || teacherFlag1) {
+                            dialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                             teacherFlag1 = false;
                             teacherFlag = false;
@@ -219,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
         }
         else
-            Toast.makeText(LoginActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
     }
 
 }

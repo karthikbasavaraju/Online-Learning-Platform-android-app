@@ -213,7 +213,7 @@ public class T_EditCourseActivity extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(T_EditCourseActivity.this, "Fields cant be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(T_EditCourseActivity.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
                 }
 
 
