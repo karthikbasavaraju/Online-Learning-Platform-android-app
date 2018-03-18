@@ -1,8 +1,11 @@
 package com.example.kbasa.teaching.students;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.DataTypes.Schedule;
 import com.example.kbasa.teaching.DataTypes.ScheduleTracker;
 import com.example.kbasa.teaching.R;
+import com.example.kbasa.teaching.teachers.ViewCourseActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +46,8 @@ public class EnrollActivity extends AppCompatActivity {
     String schedule=null;
     MyDate myDate = null;
     String[] schedules;
+    VideoView videoViewLandscape;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,15 +87,21 @@ public class EnrollActivity extends AppCompatActivity {
                 });
 
 
-                Uri uri = Uri.parse(course.getCourseUri());
+                uri = Uri.parse(course.getCourseUri());
+                videoViewLandscape = findViewById(R.id.introVideoView);
+                new StreamVideo1().execute();
 
-                VideoView videoViewLandscape = findViewById(R.id.introVideoView);
+                /*final ProgressDialog dialog = new ProgressDialog(EnrollActivity.this);
+                dialog.setMessage("Loading");
+                dialog.setIndeterminate(true);
+                dialog.show();
                 MediaController mediacontroller = new MediaController(
                         EnrollActivity.this);
                 mediacontroller.setAnchorView(videoViewLandscape);
                 videoViewLandscape.setVideoURI(uri);
                 videoViewLandscape.requestFocus();
-                videoViewLandscape.start();
+
+                videoViewLandscape.start();*/
 
                 EditText courseName = findViewById(R.id.courseNameTextView);
                 courseName.setText(course.getCourseName());
@@ -266,6 +278,66 @@ public class EnrollActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private class StreamVideo1 extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(EnrollActivity.this);
+            dialog.setMessage("Loading");
+            dialog.setIndeterminate(true);
+            dialog.show();
+            MediaController mediacontroller = new MediaController(
+                    EnrollActivity.this);
+            mediacontroller.setAnchorView(findViewById(R.id.introVideoView));
+
+            // Get the URL from String VideoURL
+            videoViewLandscape.setMediaController(mediacontroller);
+            videoViewLandscape.setVideoURI(uri);
+
+            videoViewLandscape.requestFocus();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                // Start the MediaController
+
+
+                videoViewLandscape.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    // Close the progress bar and play the video
+                    public void onPrepared(MediaPlayer mp) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //          dialog.dismiss();
+                                videoViewLandscape.start();
+
+                            }
+                        });
+                    }
+                });
+            } catch (Exception e) {
+                //   dialog.dismiss();
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+
+            dialog.dismiss();
+
+
+        }
 
     }
 }

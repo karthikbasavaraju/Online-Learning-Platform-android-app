@@ -56,7 +56,6 @@ public class ViewCourseActivity extends AppCompatActivity {
                 videoViewLandscape = findViewById(R.id.introVideoView);
                 new StreamVideo().execute();
 
-
                 EditText courseName = findViewById(R.id.courseNameTextView);
                 courseName.setText(course.getCourseName());
 
@@ -96,27 +95,6 @@ public class ViewCourseActivity extends AppCompatActivity {
                 intent.putExtra("courseId", courseId);
                 startActivity(intent);
                 finish();
-//
-//                DatabaseReference db = FirebaseDatabase.getInstance().getReference("Teacher").child(courseId);
-//
-//                db.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Intent intent = new Intent(ViewCourseActivity.this, T_EditCourseActivity.class);
-//                        intent.putExtra("courseId", courseId);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//
-
-
-
             }
         });
 
@@ -125,14 +103,50 @@ public class ViewCourseActivity extends AppCompatActivity {
 
     private class StreamVideo extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog pDialog;
+        ProgressDialog dialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            dialog = new ProgressDialog(ViewCourseActivity.this);
+            dialog.setMessage("Loading");
+            dialog.setIndeterminate(true);
+            dialog.show();
+            MediaController mediacontroller = new MediaController(
+                    ViewCourseActivity.this);
+            mediacontroller.setAnchorView(findViewById(R.id.introVideoView));
+
+            // Get the URL from String VideoURL
+            videoViewLandscape.setMediaController(mediacontroller);
+            videoViewLandscape.setVideoURI(uri);
+
+            videoViewLandscape.requestFocus();
+
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            try {
+                // Start the MediaController
+
+
+                videoViewLandscape.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    // Close the progress bar and play the video
+                    public void onPrepared(MediaPlayer mp) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                      //          dialog.dismiss();
+                                videoViewLandscape.start();
+
+                            }
+                        });
+                    }
+                });
+            } catch (Exception e) {
+             //   dialog.dismiss();
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
             // TODO Auto-generated method stub
             return null;
         }
@@ -140,27 +154,8 @@ public class ViewCourseActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void args) {
 
-            try {
-                // Start the MediaController
-                MediaController mediacontroller = new MediaController(
-                        ViewCourseActivity.this);
-                mediacontroller.setAnchorView(findViewById(R.id.introVideoView));
-                // Get the URL from String VideoURL
-                videoViewLandscape.setMediaController(mediacontroller);
-                videoViewLandscape.setVideoURI(uri);
+            dialog.dismiss();
 
-                videoViewLandscape.requestFocus();
-                videoViewLandscape.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    // Close the progress bar and play the video
-                    public void onPrepared(MediaPlayer mp) {
-                        videoViewLandscape.start();
-                    }
-                });
-            } catch (Exception e) {
-                pDialog.dismiss();
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
 
         }
 
