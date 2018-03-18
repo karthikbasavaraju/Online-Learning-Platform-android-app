@@ -263,7 +263,9 @@ public class T_AddCourseActivity extends AppCompatActivity {
                             course.setCourseUri(courseUri);
                             course.setTags(tags);
                             course.setProfessorId(user.getUid());
-                            course.setName(user.getCurrentUser().getEmail().split("@")[0]);
+                            String temp =user.getCurrentUser().getEmail().split("@")[0];
+                            temp = temp.substring(0,1).toUpperCase()+temp.substring(1).toLowerCase();
+                            course.setName(temp);
                             course.setProfessorTokenId(FirebaseInstanceId.getInstance().getToken());
 
                             List<MyDate> myDates = new ArrayList<>();

@@ -45,7 +45,7 @@ public class RecevieMessage extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d("Token", "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-            sendNotification(remoteMessage.getFrom(),remoteMessage.getNotification().getBody());
+            sendNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
 
 
         }

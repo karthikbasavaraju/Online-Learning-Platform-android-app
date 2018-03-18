@@ -50,7 +50,7 @@ class RequestServerNotification extends AsyncTask<Void, Void, Void> {
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            Log.i("Vamshik", " Some exceotuon");
+            Log.i("Karthik", " Some exceotuon");
         }
         return null;
     }
