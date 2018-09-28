@@ -61,8 +61,5 @@ dependencies {
     // upload_file
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'com.nbsp:library:1.09'
-
-    //blur
-    compile 'jp.wasabeef:blurry:2.1.1'
 }
 apply plugin: 'com.google.gms.google-services'

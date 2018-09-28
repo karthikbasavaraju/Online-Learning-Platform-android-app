@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(auth.getUid());
+        DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
         courseDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        DatabaseReference studentDB = FirebaseDatabase.getInstance().getReference("Student").child(auth.getUid());
+        DatabaseReference studentDB = FirebaseDatabase.getInstance().getReference("Student").child(FirebaseAuth.getInstance().getUid());
         studentDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -129,45 +129,4 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-      //  super.onActivityResult(requestCode, resultCode, data);
-        Log.i("profilePic", picFilePath);
-
-        if (requestCode == 1 && resultCode == -1) {
-            File f = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
-            picFilePath = f.getAbsolutePath();
-
-            if (picFilePath != null) {
-                final DatabaseReference courseDB = FirebaseDatabase.getInstance().getReference("Teacher").child(FirebaseAuth.getInstance().getUid());
-                InputStream picStream = null;
-                try {
-                    picStream = new FileInputStream(new File(picFilePath));
-                } catch (Exception e) {
-                    Log.i("louda upload", "path : " + picStream);
-                }
-
-                StorageReference mountainsRef = FirebaseStorage.getInstance().getReference();
-
-                UploadTask picUploadTask = mountainsRef.child("pic").putStream(picStream);
-                picUploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        final Uri profileUri = taskSnapshot.getDownloadUrl();
-                        courseDB.updateChildren(new HashMap<String, Object>() {{
-                            put("profilePic", profileUri);
-                        }});
-                    }
-                });
-            }
-        }
-    }
-*/
 }

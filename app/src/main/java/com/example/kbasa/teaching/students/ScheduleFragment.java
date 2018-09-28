@@ -1,6 +1,8 @@
 package com.example.kbasa.teaching.students;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import com.example.kbasa.teaching.DataTypes.MyDate;
 import com.example.kbasa.teaching.DataTypes.Schedule;
 import com.example.kbasa.teaching.ListViewAdapter;
+import com.example.kbasa.teaching.LoginActivity;
 import com.example.kbasa.teaching.R;
 import com.example.kbasa.teaching.StudentSearchActivity;
 import com.example.kbasa.teaching.teachers.T_EditCourseActivity;
@@ -99,13 +102,12 @@ public class ScheduleFragment extends Fragment {
                     }
                     vector.put(temp,v);
                 }
-                Bundle b = getActivity().getIntent().getExtras();
-                user = b.getString("user");
-                if(user.equalsIgnoreCase("student")){
-                    user = "Student";
-                }
-                else
+                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                boolean userType = sharedPref.getBoolean("IsTeacher",false);
+                if(userType)
                     user = "Teacher";
+                else
+                    user = "Student";
 
                 DatabaseReference student = FirebaseDatabase.getInstance().getReference(user);
                 student.addValueEventListener(new ValueEventListener() {
@@ -192,6 +194,8 @@ public class ScheduleFragment extends Fragment {
                 lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                     }
                 });
                 return;

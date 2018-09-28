@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.kbasa.teaching.R;
-import com.example.kbasa.teaching.StudentSearchActivity;
 import com.squareup.picasso.Picasso;
+
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -21,11 +22,11 @@ import java.util.Vector;
 
 public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAdapter.ViewHolder> {
 
-    Vector<HashMap<String,String>> dataset;
+    Vector<HashMap<String, String>> dataset;
     Context context;
     int card;
 
-    public MyRecylcerViewAdapter(final Vector<HashMap<String,String>> dataset, Context context, int card) {
+    public MyRecylcerViewAdapter(final Vector<HashMap<String, String>> dataset, Context context, int card) {
         this.dataset = dataset;
         this.context = context;
         this.card = card;
@@ -44,19 +45,13 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
     public void onBindViewHolder(MyRecylcerViewAdapter.ViewHolder holder, int position) {
 
 
-
-
         final HashMap<String, String> temp = dataset.get(position);
         holder.mTitle.setText(temp.get("courseName"));
         if (card == R.layout.student_category_view) {
             holder.imageView.setImageResource(Integer.parseInt(temp.get("resourceId")));
         } else {
-            if(temp.get("profileUri")!=null) {
-                Uri uri = Uri.parse(temp.get("profileUri"));
-                Picasso.with(context).load(uri).into(holder.imageView);
-            }
-            holder.professor.setText(temp.get("name"));
-
+            Uri uri = Uri.parse(temp.get("profileUri"));
+            Picasso.with(context).load(uri).into(holder.imageView);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +59,11 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
             public void onClick(View view) {
 
                 if (card == R.layout.student_category_view) {
-                    Intent intent = new Intent(context,StudentSearchActivity.class);
-                    intent.putExtra("tag", temp.get("courseName"));
-                    context.startActivity(intent);
+
 
                 } else {
-                    Intent intent = new Intent(context,EnrollActivity.class);
-                    intent.putExtra("courseId",temp.get("courseId"));
+                    Intent intent = new Intent(context, EnrollActivity.class);
+                    intent.putExtra("courseId", temp.get("courseId"));
                     context.startActivity(intent);
 
                 }
@@ -87,13 +80,11 @@ public class MyRecylcerViewAdapter extends RecyclerView.Adapter<MyRecylcerViewAd
 
         public TextView mTitle;
         public ImageView imageView;
-        public TextView professor;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTitle = itemView.findViewById(R.id.title);
             imageView = itemView.findViewById(R.id.icon);
-            professor = itemView.findViewById(R.id.professor);
         }
     }
 }

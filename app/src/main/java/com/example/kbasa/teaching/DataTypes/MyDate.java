@@ -33,7 +33,7 @@ public class MyDate {
         this.year = Integer.parseInt(dateSplit[2]);
 
         this.hour = Integer.parseInt(timeSplit[0]);
-        this.minute= Integer.parseInt(timeSplit[0]);
+        this.minute= Integer.parseInt(timeSplit[1]);
 
     }
 

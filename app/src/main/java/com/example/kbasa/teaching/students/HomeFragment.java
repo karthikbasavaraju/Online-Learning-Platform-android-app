@@ -116,9 +116,6 @@ public class HomeFragment extends Fragment {
 
                 recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_recommended);
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setItemViewCacheSize(20);
-                recyclerView.setDrawingCacheEnabled(true);
-                recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 adapter = new MyRecylcerViewAdapter(recommended,getContext(),R.layout.student_recommended_view);
@@ -144,10 +141,6 @@ public class HomeFragment extends Fragment {
 
                         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_ongoing);
                         recyclerView.setHasFixedSize(true);
-                        recyclerView.setItemViewCacheSize(20);
-                        recyclerView.setDrawingCacheEnabled(true);
-                        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
                         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                         recyclerView.setLayoutManager(layoutManager);
                         adapter = new MyRecylcerViewAdapter(myCourseVector,getContext(),R.layout.student_recommended_view);
@@ -165,9 +158,6 @@ public class HomeFragment extends Fragment {
 
                 recyclerView = view.findViewById(R.id.recycler_view_category);
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setItemViewCacheSize(20);
-                recyclerView.setDrawingCacheEnabled(true);
-                recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
                 recyclerView.setLayoutManager(layoutManager);
                 adapter = new MyRecylcerViewAdapter(courseCategories,getContext(),R.layout.student_category_view);

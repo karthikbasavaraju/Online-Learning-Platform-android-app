@@ -61,6 +61,10 @@ public class LoginActivity extends AppCompatActivity {
             if(userType==true){
                 Intent intent = new Intent(this,TeacherHomeActivity.class);
                 intent.putExtra("user", "teacher");
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("IsStudent", false);
+                editor.putBoolean("IsTeacher", true);
+                editor.commit();
                 startActivity(intent);
                 finish();
             }
@@ -68,6 +72,10 @@ public class LoginActivity extends AppCompatActivity {
             else{
                 Intent intent = new Intent(this, TeacherHomeActivity.class);
                 intent.putExtra("user", "student");
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("IsStudent", true);
+                editor.putBoolean("IsTeacher", false);
+                editor.commit();
                 startActivity(intent);
                 finish();
             }
